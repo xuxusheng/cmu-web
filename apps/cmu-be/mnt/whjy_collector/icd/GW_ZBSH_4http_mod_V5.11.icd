@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2013 sp1 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<SCL xmlns="http://www.iec.ch/61850/2006/SCL" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.whjy.cn" xmlns:whjy="http://www.whjy.cn" xsi:schemaLocation="http://www.iec.ch/61850/2006/SCL file:///D:/SclSchema/sclschemaEd2/SCL.xsd">
+	<Header id="WHJY_SIMH" nameStructure="IEDName" toolID="WHJY_ICD_CFG" version="1.0" revision="0">
+		<History>
+			<Hitem when="2023-03-17 16:13:00" version="4.10" revision="edit" what="基于4.08版本添加DO:综合分析结果，添加初始化q的值" who="JY"/>
+			<Hitem when="2023-01-10 16:13:00" version="4.03" revision="edit" what="在DOI中添加dU" who="JY"/>
+			<Hitem when="2022-10-25 16:13:00" version="4.01" revision="create" what="根据套管Http V1.0.1接口修改" who="JY"/>
+			<Hitem when="2022-03-25 16:13:00" version="1.00" revision="create" what="国网标准套管IED" who="JY"/>
+		</History>
+	</Header>
+	<Communication>
+		<SubNetwork type="8-MMS" name="W01">
+			<Text>Station bus</Text>
+			<BitRate unit="b/s">10</BitRate>
+			<ConnectedAP iedName="HDTG01" apName="S1">
+				<Address>
+					<P type="OSI-AP-Title">1,3,9999,33</P>
+					<P type="OSI-AE-Qualifier">33</P>
+					<P type="OSI-PSEL">00 00 00 01</P>
+					<P type="OSI-SSEL">00 01</P>
+					<P type="OSI-TSEL">00 01</P>
+					<P type="IP">192.168.1.10</P>
+					<P type="IP-SUBNET">255.255.255.0</P>
+				</Address>
+			</ConnectedAP>
+		</SubNetwork>
+	</Communication>
+	<IED name="HDTG01" desc="套管监测装置" manufacturer="EPRI" configVersion="1.00">
+		<Services>
+			<DynAssociation/>
+			<GetDirectory/>
+			<GetDataObjectDefinition/>
+			<GetDataSetValue/>
+			<DataSetDirectory/>
+			<ReadWrite/>
+			<ConfDataSet max="12" maxAttributes="500"/>
+			<ConfReportControl max="12"/>
+			<ReportSettings bufTime="Dyn" cbName="Conf" rptID="Dyn" datSet="Conf" intgPd="Dyn" optFields="Conf"/>
+			<ConfLogControl max="12"/>
+		</Services>
+		<AccessPoint name="S1">
+			<Server>
+				<Authentication/>
+				<LDevice inst="TC1aMONT" desc="1000kV台曹I线高抗A相">
+					<LN0 desc="逻辑节点零" inst="" lnType="WHJY_LLN0" lnClass="LLN0">
+						<DataSet name="dsMeasure" desc="套管综合监测遥测数据集">
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="AbsReact" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LosFact" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LeakA" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="VolAmp" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="PhaseDiff" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="PeakPaDsch" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="PlsNum" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="AvgPaDsch" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="BackNoise" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilTmp" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilPress" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="InstH2" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateWeek" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="AvgH2Day" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateDay" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateMon" fc="MX"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="MicroWater" fc="MX"/>
+						</DataSet>
+						<DataSet name="dsState" desc="套管综合监测遥信数据集">
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="MoDevConf" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="MoDevRun" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="CompAnalyResult" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="DisRecomm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="AbsReactWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="AbsReactAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LosFactWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LosFactAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LeakAWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LeakAAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="MoDevConf" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="MoDevRun" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="CompAnalyResult" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="DisRecomm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="PdAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="MoDevConf" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="MoDevRun" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="CompAnalyResult" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="DisRecomm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2Wrn1" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2Wrn2" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2Alm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2AbsIncreAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="SampOilFailed" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="AvgH2DayWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateDayWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateWeekWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateMonWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilPressWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilTmpWrn" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilPressAlm" fc="ST"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilTmpAlm" fc="ST"/>
+						</DataSet>
+						<DataSet name="dsSetting" desc="套管综合监测定值数据集">
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="SmpProd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="AbsReactWrnSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="AbsReactAlmSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LosFactWrnSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="LosFactAlmSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="RefReactSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="RefPFSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="RefVolSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="ZBSH" lnInst="1" doName="VolRatioSpt" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnInst="1" doName="CurrRatioSpt" fc="SP" lnClass="ZBSH"/>
+							<FCDA ldInst="TC1aMONT" lnInst="1" doName="AngCalSpt" fc="SP" lnClass="ZBSH"/>
+							<FCDA ldInst="TC1aMONT" lnInst="1" doName="LeakAWrnSpt" fc="SP" lnClass="ZBSH"/>
+							<FCDA ldInst="TC1aMONT" lnInst="1" doName="LeakAAlmSpt" fc="SP" lnClass="ZBSH"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="SmpProd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="DetectAmpTh" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="DetectPlsNumTh" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="CalPDa" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SPDB" lnInst="1" doName="CalPDb" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="SmpProd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="InstH2WrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="InstH2ZAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="AvgH2DayWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="AvgH2DayAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateDayWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateDayAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateWeekWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateWeekAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateMonWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="H2RateMonAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilPressWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilPressAlmThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilTmpWrnThd" fc="SP"/>
+							<FCDA ldInst="TC1aMONT" lnClass="SIMH" lnInst="1" doName="OilTmpAlmThd" fc="SP"/>
+						</DataSet>
+						<ReportControl name="urcbMeasure" desc="套管遥测数据报告控制块" rptID="urcbMeasureID" datSet="dsMeasure" confRev="0" buffered="false" intgPd="60000" bufTime="0">
+							<TrgOps period="true" dchg="true" qchg="true" dupd="false"/>
+							<OptFields dataRef="false" reasonCode="true" dataSet="true" entryID="true" timeStamp="true"/>
+							<RptEnabled max="12"/>
+						</ReportControl>
+						<ReportControl name="brcbState" desc="套管遥信数据报告控制块" rptID="brcbStateID" datSet="dsState" confRev="0" buffered="true" intgPd="60000" bufTime="0">
+							<TrgOps period="true" dchg="true" qchg="true" dupd="false"/>
+							<OptFields dataRef="false" reasonCode="true" dataSet="true" entryID="true" timeStamp="true"/>
+							<RptEnabled max="12"/>
+						</ReportControl>
+						<LogControl desc="测量量日志控制块" name="logMeasure" datSet="dsMeasure" logName="TC1aMONT" logEna="true" intgPd="300000">
+							<TrgOps dchg="true" qchg="true"/>
+						</LogControl>
+						<LogControl desc="状态量日志控制块" name="logState" datSet="dsState" logName="TC1aMONT" logEna="true" intgPd="300000">
+							<TrgOps dchg="true" qchg="true"/>
+						</LogControl>
+						<SettingControl numOfSGs="8" actSG="1"/>
+					</LN0>
+					<LN desc="物理设备节点" inst="1" lnType="WHJY_LPHD" lnClass="LPHD"/>
+					<LN desc="套管绝缘监测" inst="1" lnType="WHJY_ZBSH" lnClass="ZBSH">
+						<Private whjy:LnFunc="FUN_RWZBSH" whjy:Group="101"/>
+						<DOI desc="在线电容量" name="AbsReact">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_1"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>在线电容量</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝对介质损耗因数" name="LosFact">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_2"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>绝对介质损耗因数</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="全电流" name="LeakA">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_3"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>全电流</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="套管电压" name="VolAmp">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_4"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>套管电压</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="相位差" name="PhaseDiff">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_5"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>相位差</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="通信异常" name="MoDevConf">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_1"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>通信异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="监测设备运行异常" name="MoDevRun">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_2"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>监测设备运行异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="综合分析结果" name="CompAnalyResult">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_3"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>综合分析结果</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="处置建议" name="DisRecomm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_4"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>处置建议</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝对电容量预警" name="AbsReactWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_11"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>绝对电容量预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝对电容量告警" name="AbsReactAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_12"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>绝对电容量告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="介质损耗因数预警" name="LosFactWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_13"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>介质损耗因数预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="介质损耗因数告警" name="LosFactAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_14"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>介质损耗因数告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="泄漏电流预警" name="LeakAWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_15"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>泄漏电流告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="泄漏电流报警" name="LeakAAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_16"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>泄漏电流报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="数据上送周期" name="SmpProd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="i" sAddr="yt_1"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>数据上送周期</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝对电容量预警阈值" name="AbsReactWrnSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_2"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>绝对电容量预警阈值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝对电容量报阈值" name="AbsReactAlmSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_3"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>绝对电容量报阈值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="介质损耗因数预阈值" name="LosFactWrnSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_4"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>介质损耗因数预阈值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-介质损耗因数报警值" name="LosFactAlmSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_5"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-介质损耗因数报警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-投运时套管参考电容" name="RefReactSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_6"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-投运时套管参考电容</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-投运时套管参考功率因数" name="RefPFSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_7"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-投运时套管参考功率因数</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-投运时套管参考电压" name="RefVolSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_8"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-投运时套管参考电压</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-电压变比" name="VolRatioSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_9"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-电压变比</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-电流变比" name="CurrRatioSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_10"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-电流变比</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-固有角差校验" name="AngCalSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_11"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-固有角差校验</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-泄漏电流预警值" name="LeakAWrnSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_12"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-泄漏电流预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-泄漏电流报警值" name="LeakAAlmSpt">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_13"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-泄漏电流报警值</Val>
+							</DAI>
+						</DOI>
+					</LN>
+					<LN desc="套管局放监测" inst="1" lnType="WHJY_SPDB" lnClass="SPDB">
+						<Private whjy:LnFunc="FUN_RWZBSH" whjy:Group="102"/>
+						<DOI desc="局放峰值" name="PeakPaDsch">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_1"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>局放峰值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="放电次数" name="PlsNum">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_2"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>放电次数</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="局放平均值" name="AvgPaDsch">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_3"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>局放平均值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="背景噪声" name="BackNoise">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_4"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>背景噪声</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="IED与监测设备通信异常" name="MoDevConf">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_1"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>IED与监测设备通信异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="监测设备运行异常" name="MoDevRun">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_2"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>监测设备运行异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="综合分析结果" name="CompAnalyResult">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_3"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>综合分析结果</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="处置建议" name="DisRecomm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_4"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>处置建议</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="局放报警" name="PdAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_11"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>局放告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="数据上送周期" name="SmpProd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="i" sAddr="yt_1"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>数据上送周期</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-幅值" name="DetectAmpTh">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_2"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-幅值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-放电次数" name="DetectPlsNumTh">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="i" sAddr="yt_3"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-放电次数</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-局放校准系数a" name="CalPDa">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_4"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-幅值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-局放校准系数b" name="CalPDb">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_5"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-局放校准系数b</Val>
+							</DAI>
+						</DOI>
+					</LN>
+					<LN desc="套管氢气监测" inst="1" lnType="WHJY_SIMH" lnClass="SIMH">
+						<Private whjy:LnFunc="FUN_RWZBSH" whjy:Group="103"/>
+						<DOI desc="底层油温" name="OilTmp">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_1"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>底层油温</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="绝缘液体压力" name="OilPress">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_2"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>绝缘液体压力</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="氢气测量量" name="InstH2">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_3"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>氢气测量量</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="溶解氢周变化率" name="H2RateWeek">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_4"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>溶解氢周变化率</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="24小时平均溶解氢值" name="AvgH2Day">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_5"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>24小时平均溶解氢值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="溶解氢日变化率" name="H2RateDay">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_6"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>溶解氢日变化率</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="溶解氢月变化率" name="H2RateMon">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_7"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>溶解氢月变化率</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="微水" name="MicroWater">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="mag">
+								<DAI name="f" sAddr="yc_8"/>
+							</SDI>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<SDI name="units">
+								<DAI name="SIUnit">
+									<Val>29</Val>
+								</DAI>
+								<DAI name="multiplier">
+									<Val>3</Val>
+								</DAI>
+							</SDI>
+							<DAI name="dU">
+								<Val>微水</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="IED与监测设备通信异常" name="MoDevConf">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_1"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>IED与监测设备通信异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="监测设备运行异常" name="MoDevRun">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_2"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>监测设备运行异常</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="数据告警" name="CompAnalyResult">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_3"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>综合分析结果</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="处置建议" name="DisRecomm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_4"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>处置建议</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-氢气超过注意值1" name="H2Wrn1">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_11"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-氢气超过注意值1</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-氢气超过注意值2" name="H2Wrn2">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_12"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-氢气超过注意值2</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-氢气含量告警" name="H2Alm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_13"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-氢气含量告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-氢气绝对增量告警" name="H2AbsIncreAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_14"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>局放告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-氢气绝对增量告警" name="SampOilFailed">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_15"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-氢气绝对增量告警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-24小时平均溶解氢值预警" name="AvgH2DayWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_16"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-24小时平均溶解氢值预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-溶解气日变化率预警" name="H2RateDayWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_17"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-溶解气日变化率预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-溶解氢周变化率预警" name="H2RateWeekWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_18"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-溶解氢周变化率预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-溶解氢月变化率预警" name="H2RateMonWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_19"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-溶解氢月变化率预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-油压预警" name="OilPressWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_20"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-油压预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-油温预警" name="OilTmpWrn">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_21"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-油温预警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-油压报警" name="OilPressAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_22"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-油压报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="状态-油温报警" name="OilTmpAlm">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<DAI name="stVal" sAddr="yx_23"/>
+							<DAI name="q">
+								<Val>0100000000000</Val>
+							</DAI>
+							<DAI name="dU">
+								<Val>状态-油温报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="数据上送周期" name="SmpProd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="i" sAddr="yt_1"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>数据上送周期</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-瞬时溶解气值预警值" name="InstH2WrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_2"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-瞬时溶解气值预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-瞬时溶解气值报警值" name="InstH2ZAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_3"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-瞬时溶解气值报警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-24小时平均溶解氢值预警值" name="AvgH2DayWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_4"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-24小时平均溶解氢值预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-24小时平均溶解氢值报警值" name="AvgH2DayAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_5"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-24小时平均溶解氢值报警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢日变化率预警值" name="H2RateDayWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_6"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢日变化率预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢日变化率报警" name="H2RateDayAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_7"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢日变化率报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢周变化率预警值" name="H2RateWeekWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_8"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢周变化率预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢周变化率报警" name="H2RateWeekAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_9"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢周变化率报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢月变化率预警值" name="H2RateMonWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_10"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢月变化率预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-溶解氢月变化率报警" name="H2RateMonAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_11"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-溶解氢月变化率报警</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-油压预警值" name="OilPressWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_12"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-油压预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-油压报警值" name="OilPressAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_13"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-油压报警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-油温预警值" name="OilTmpWrnThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_14"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-油温预警值</Val>
+							</DAI>
+						</DOI>
+						<DOI desc="检出阈值-油温报警值" name="OilTmpAlmThd">
+							<Private whjy:Func="FUN_RWZBSH"/>
+							<SDI name="setMag">
+								<DAI name="f" sAddr="yt_15"/>
+							</SDI>
+							<DAI name="dU">
+								<Val>检出阈值-油温报警值</Val>
+							</DAI>
+						</DOI>
+					</LN>
+				</LDevice>
+			</Server>
+		</AccessPoint>
+	</IED>
+	<DataTypeTemplates>
+		<!--逻辑节点定义-->
+		<LNodeType lnClass="LLN0" desc="逻辑节点零" id="WHJY_LLN0">
+			<DO name="Mod" type="WHJY_INC_Mod" desc="Mode"/>
+			<DO name="Beh" type="WHJY_INS_Beh" desc="Behaviour"/>
+			<DO name="Health" type="WHJY_INS_Health" desc="Health"/>
+			<DO name="NamPlt" type="WHJY_LPL_LN0" desc="Name Plate"/>
+		</LNodeType>
+		<LNodeType lnClass="LPHD" desc="物理逻辑节点" id="WHJY_LPHD">
+			<DO name="PhyNam" type="WHJY_DPL" desc="Physical device name plate"/>
+			<DO name="PhyHealth" type="WHJY_INS_Health" desc="Physical device health"/>
+			<DO name="Proxy" type="WHJY_SPS" desc="Indicates if this LN is a proxy"/>
+		</LNodeType>
+		<LNodeType lnClass="ZBSH" desc="套管介损监测逻辑节点" id="WHJY_ZBSH">
+			<DO desc="Mode" name="Mod" type="WHJY_INC_Mod"/>
+			<DO desc="Behaviour" name="Beh" type="WHJY_INS_Beh"/>
+			<DO desc="Health" name="Health" type="WHJY_INS_Health"/>
+			<DO desc="Name Plate" name="NamPlt" type="WHJY_LPL"/>
+			<DO desc="在线电容量" name="AbsReact" type="WHJY_MV_F"/>
+			<DO desc="绝对介质损耗因数" name="LosFact" type="WHJY_MV_F"/>
+			<DO desc="全电流" name="LeakA" type="WHJY_MV_F"/>
+			<DO desc="套管电压" name="VolAmp" type="WHJY_MV_F"/>
+			<DO desc="相位差" name="PhaseDiff" type="WHJY_MV_F"/>
+			<DO desc="通信异常" name="MoDevConf" type="WHJY_SPS"/>
+			<DO desc="监测设备运行异常" name="MoDevRun" type="WHJY_INS"/>
+			<DO desc="综合分析结果" name="CompAnalyResult" type="WHJY_SPS"/>
+			<DO desc="处置建议" name="DisRecomm" type="WHJY_INS"/>
+			<DO desc="绝对电容量预警" name="AbsReactWrn" type="WHJY_SPS"/>
+			<DO desc="绝对电容量告警" name="AbsReactAlm" type="WHJY_SPS"/>
+			<DO desc="介质损耗因数预警" name="LosFactWrn" type="WHJY_SPS"/>
+			<DO desc="介质损耗因数告警" name="LosFactAlm" type="WHJY_SPS"/>
+			<DO desc="泄漏电流预警" name="LeakAWrn" type="WHJY_SPS"/>
+			<DO desc="泄漏电流报警" name="LeakAAlm" type="WHJY_SPS"/>
+			<DO desc="数据上送周期" name="SmpProd" type="WHJY_ASG_SP_I"/>
+			<DO desc="绝对电容量预警阈值" name="AbsReactWrnSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="绝对电容量报阈值" name="AbsReactAlmSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="介质损耗因数预阈值" name="LosFactWrnSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-介质损耗因数报警值" name="LosFactAlmSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-投运时套管参考电容" name="RefReactSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-投运时套管参考功率因数" name="RefPFSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-投运时套管参考电压" name="RefVolSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-电压变比" name="VolRatioSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-电流变比" name="CurrRatioSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-固有角差校验" name="AngCalSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-泄漏电流预警值" name="LeakAWrnSpt" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-泄漏电流报警值" name="LeakAAlmSpt" type="WHJY_ASG_SP_F"/>
+		</LNodeType>
+		<LNodeType lnClass="SPDB" desc="套管局放监测逻辑节点" id="WHJY_SPDB">
+			<DO desc="Mode" name="Mod" type="WHJY_INC_Mod"/>
+			<DO desc="Behaviour" name="Beh" type="WHJY_INS_Beh"/>
+			<DO desc="Health" name="Health" type="WHJY_INS_Health"/>
+			<DO desc="Name Plate" name="NamPlt" type="WHJY_LPL"/>
+			<DO desc="局放峰值" name="PeakPaDsch" type="WHJY_MV_F"/>
+			<DO desc="放电次数" name="PlsNum" type="WHJY_MV_I"/>
+			<DO desc="局放平均值" name="AvgPaDsch" type="WHJY_MV_F"/>
+			<DO desc="背景噪声" name="BackNoise" type="WHJY_MV_F"/>
+			<DO desc="通信异常" name="MoDevConf" type="WHJY_SPS"/>
+			<DO desc="监测设备运行异常" name="MoDevRun" type="WHJY_INS"/>
+			<DO desc="综合分析结果" name="CompAnalyResult" type="WHJY_SPS"/>
+			<DO desc="处置建议" name="DisRecomm" type="WHJY_INS"/>
+			<DO desc="局放报警" name="PdAlm" type="WHJY_SPS"/>
+			<DO desc="数据上送周期" name="SmpProd" type="WHJY_ASG_SP_I"/>
+			<DO desc="高频-检出阈值-幅值" name="DetectAmpTh" type="WHJY_ASG_SP_F"/>
+			<DO desc="高频-检出阈值-放电次数" name="DetectPlsNumTh" type="WHJY_ASG_SP_I"/>
+			<DO desc="高频-检出阈值-局放校准系数a" name="CalPDa" type="WHJY_ASG_SP_F"/>
+			<DO desc="高频-检出阈值-局放校准系数b" name="CalPDb" type="WHJY_ASG_SP_F"/>
+		</LNodeType>
+		<LNodeType lnClass="SIMH" desc="套管氢气监测逻辑节点" id="WHJY_SIMH">
+			<DO desc="Mode" name="Mod" type="WHJY_INC_Mod"/>
+			<DO desc="Behaviour" name="Beh" type="WHJY_INS_Beh"/>
+			<DO desc="Health" name="Health" type="WHJY_INS_Health"/>
+			<DO desc="Name Plate" name="NamPlt" type="WHJY_LPL"/>
+			<DO desc="底层油温" name="OilTmp" type="WHJY_MV_F"/>
+			<DO desc="绝缘液体压力" name="OilPress" type="WHJY_MV_F"/>
+			<DO desc="氢气测量量" name="InstH2" type="WHJY_MV_F"/>
+			<DO desc="溶解氢周变化率" name="H2RateWeek" type="WHJY_MV_F"/>
+			<DO desc="24小时平均溶解氢值" name="AvgH2Day" type="WHJY_MV_F"/>
+			<DO desc="溶解氢日变化率" name="H2RateDay" type="WHJY_MV_F"/>
+			<DO desc="溶解氢月变化率" name="H2RateMon" type="WHJY_MV_F"/>
+			<DO desc="微水" name="MicroWater" type="WHJY_MV_F"/>
+			<DO desc="通信异常" name="MoDevConf" type="WHJY_SPS"/>
+			<DO desc="监测设备运行异常" name="MoDevRun" type="WHJY_INS"/>
+			<DO desc="数据告警" name="CompAnalyResult" type="WHJY_SPS"/>
+			<DO desc="处置建议" name="DisRecomm" type="WHJY_INS"/>
+			<DO desc="状态-氢气超过注意值1" name="H2Wrn1" type="WHJY_SPS"/>
+			<DO desc="状态-氢气超过注意值2" name="H2Wrn2" type="WHJY_SPS"/>
+			<DO desc="状态-氢气含量告警 ppm" name="H2Alm" type="WHJY_SPS"/>
+			<DO desc="状态-氢气绝对增量告警" name="H2AbsIncreAlm" type="WHJY_SPS"/>
+			<DO desc="状态-未取到油样报警" name="SampOilFailed" type="WHJY_SPS"/>
+			<DO desc="状态-24小时平均溶解氢值预警" name="AvgH2DayWrn" type="WHJY_SPS"/>
+			<DO desc="状态-溶解气日变化率预警" name="H2RateDayWrn" type="WHJY_SPS"/>
+			<DO desc="状态-溶解氢周变化率预警" name="H2RateWeekWrn" type="WHJY_SPS"/>
+			<DO desc="状态-溶解氢月变化率预警" name="H2RateMonWrn" type="WHJY_SPS"/>
+			<DO desc="状态-油压预警" name="OilPressWrn" type="WHJY_SPS"/>
+			<DO desc="状态-油温预警" name="OilTmpWrn" type="WHJY_SPS"/>
+			<DO desc="状态-油压报警" name="OilPressAlm" type="WHJY_SPS"/>
+			<DO desc="状态-油温报警" name="OilTmpAlm" type="WHJY_SPS"/>
+			<DO desc="数据上送周期" name="SmpProd" type="WHJY_ASG_SP_I"/>
+			<DO desc="检出阈值-瞬时溶解气值预警值" name="InstH2WrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-瞬时溶解气值报警值" name="InstH2ZAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-24小时平均溶解氢值预警值" name="AvgH2DayWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-24小时平均溶解氢值报警值" name="AvgH2DayAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢日变化率预警值" name="H2RateDayWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢日变化率报警" name="H2RateDayAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢周变化率预警值" name="H2RateWeekWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢周变化率报警" name="H2RateWeekAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢月变化率预警值" name="H2RateMonWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-溶解氢月变化率报警" name="H2RateMonAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-油压预警值" name="OilPressWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-油压报警值" name="OilPressAlmThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-油温预警值" name="OilTmpWrnThd" type="WHJY_ASG_SP_F"/>
+			<DO desc="检出阈值-油温报警值" name="OilTmpAlmThd" type="WHJY_ASG_SP_F"/>
+		</LNodeType>
+		<!--数据对象定义-->
+		<DOType id="WHJY_SPS" cdc="SPS" desc="单点状态信息类">
+			<DA bType="BOOLEAN" name="stVal" fc="ST" dchg="true"/>
+			<DA qchg="true" bType="Quality" name="q" fc="ST"/>
+			<DA bType="Timestamp" name="t" fc="ST"/>
+			<DA bType="Unicode255" name="dU" fc="DC"/>
+		</DOType>
+		<DOType id="WHJY_SPS_EX" cdc="SPS" desc="单点状态信息类">
+			<DA bType="BOOLEAN" name="stVal" fc="ST" dchg="true"/>
+			<DA qchg="true" bType="Quality" name="q" fc="ST"/>
+			<DA bType="Timestamp" name="t" fc="ST"/>
+			<DA name="subID" fc="SV" bType="VisString64"/>
+			<DA name="subVal" fc="SV" bType="BOOLEAN"/>
+			<DA name="subQ" fc="SV" bType="Quality"/>
+			<DA name="subEna" fc="SV" bType="BOOLEAN"/>
+			<DA bType="Unicode255" name="dU" fc="DC"/>
+			<DA name="dataNs" bType="VisString255" fc="EX">
+				<Val>WHNR NameSpace</Val>
+			</DA>
+		</DOType>
+		<DOType id="WHJY_INS_Beh" cdc="INS" desc="整数状态类(用于数据对象Beh)">
+			<DA bType="Enum" type="Beh" name="stVal" fc="ST" dchg="true"/>
+			<DA qchg="true" bType="Quality" name="q" fc="ST"/>
+			<DA bType="Timestamp" name="t" fc="ST"/>
+		</DOType>
+		<DOType id="WHJY_INS" cdc="INS" desc="整数状态类">
+			<DA name="stVal" fc="ST" bType="INT32" dchg="true"/>
+			<DA name="q" fc="ST" bType="Quality" qchg="true"/>
+			<DA name="t" fc="ST" bType="Timestamp"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+		</DOType>
+		<DOType id="WHJY_INS_Health" cdc="INS" desc="整数状态类(用于数据对象Health)">
+			<DA bType="Enum" type="Health" name="stVal" fc="ST" dchg="true"/>
+			<DA qchg="true" bType="Quality" name="q" fc="ST"/>
+			<DA bType="Timestamp" name="t" fc="ST"/>
+		</DOType>
+		<DOType id="WHJY_MV" cdc="MV" desc="测量值类(Struct)">
+			<DA name="mag" type="WHJY_AnalogueValue" bType="Struct" fc="MX" dchg="true"/>
+			<DA name="q" bType="Quality" fc="MX" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" type="WHJY_units" bType="Struct" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+		</DOType>
+		<DOType id="WHJY_MV_EX" cdc="MV" desc="测量值类(Struct)">
+			<DA name="mag" type="WHJY_AnalogueValue" bType="Struct" fc="MX" dchg="true"/>
+			<DA name="q" bType="Quality" fc="MX" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" type="WHJY_units" bType="Struct" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+			<DA name="dataNs" bType="VisString255" fc="EX"/>
+		</DOType>
+		<DOType id="WHJY_MV_F_EX" cdc="MV" desc="测量值类扩展(float)">
+			<DA name="mag" type="WHJY_AnalogueValue_F" bType="Struct" fc="MX" dchg="true"/>
+			<DA name="q" bType="Quality" fc="MX" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" type="WHJY_units" bType="Struct" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+			<DA name="dataNs" bType="VisString255" fc="EX"/>
+		</DOType>
+		<DOType id="WHJY_MV_F" cdc="MV" desc="测量值类(float)">
+			<DA name="mag" type="WHJY_AnalogueValue_F" bType="Struct" fc="MX" dchg="true"/>
+			<DA name="q" bType="Quality" fc="MX" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" type="WHJY_units" bType="Struct" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+		</DOType>
+		<DOType id="WHJY_MV_I" cdc="MV" desc="测量值类(int32)">
+			<DA name="mag" type="WHJY_AnalogueValue_I" bType="Struct" fc="MX" dchg="true"/>
+			<DA name="q" bType="Quality" fc="MX" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" type="WHJY_units" bType="Struct" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+		</DOType>
+		<DOType id="WHJY_MV_I_EX" cdc="MV" desc="测量值类">
+			<DA name="mag" bType="Struct" type="WHJY_AnalogueValue_I" fc="MX" dchg="true"/>
+			<DA name="q" qchg="true" bType="Quality" fc="MX"/>
+			<DA name="t" bType="Timestamp" fc="MX"/>
+			<DA name="units" bType="Struct" type="WHJY_units" fc="CF"/>
+			<DA name="db" bType="INT32U" fc="CF"/>
+			<DA name="zeroDb" bType="INT32U" fc="CF"/>
+			<DA name="dU" bType="Unicode255" fc="DC"/>
+			<DA name="dataNs" bType="VisString255" fc="EX">
+				<Val>WHNR NameSpace</Val>
+			</DA>
+		</DOType>
+		<DOType id="WHJY_ING" cdc="ING" desc="整数定值">
+			<DA name="setVal" fc="SG" bType="INT32"/>
+			<DA name="minVal" fc="CF" bType="INT32"/>
+			<DA name="maxVal" fc="CF" bType="INT32"/>
+			<DA name="stepSize" fc="CF" bType="INT32U"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+		</DOType>
+		<DOType id="WHJY_ING_EX" cdc="ING" desc="整数定值">
+			<DA name="setVal" fc="SG" bType="INT32"/>
+			<DA name="minVal" fc="CF" bType="INT32"/>
+			<DA name="maxVal" fc="CF" bType="INT32"/>
+			<DA name="stepSize" fc="CF" bType="INT32U"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="dataNs" bType="VisString255" fc="EX">
+				<Val>WHNR NameSpace</Val>
+			</DA>
+		</DOType>
+		<DOType id="WHJY_INC_Mod" cdc="INC" desc="可控整数状态类">
+			<DA name="stVal" bType="Enum" type="Mod" fc="ST" dchg="true"/>
+			<DA name="q" bType="Quality" fc="ST" qchg="true"/>
+			<DA name="t" bType="Timestamp" fc="ST"/>
+			<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF">
+				<Val>0</Val>
+			</DA>
+		</DOType>
+		<DOType id="WHJY_INC_CO" cdc="INC" desc="可控整数状态类(支持CO)">
+			<DA name="ctlVal" fc="CO" bType="INT32"/>
+			<DA name="stVal" fc="ST" bType="INT32" dchg="true"/>
+			<DA name="q" fc="ST" bType="Quality" qchg="true"/>
+			<DA name="t" fc="ST" bType="Timestamp"/>
+			<DA name="ctlModel" fc="CF" bType="Enum" type="ctlModel"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+		</DOType>
+		<DOType id="WHJY_INC" cdc="INC" desc="可控整数状态类(支持CO,SUB)">
+			<DA name="SBO" fc="CO" bType="VisString64"/>
+			<DA name="SBOw" fc="CO" bType="Struct" type="WHJY_INC_SelectWithValue"/>
+			<DA name="Oper" fc="CO" bType="Struct" type="WHJY_INC_Operate"/>
+			<DA name="Cancel" fc="CO" bType="Struct" type="WHJY_INC_Cancel"/>
+			<DA name="origin" fc="ST" bType="Struct" type="Originator"/>
+			<DA name="ctlNum" fc="ST" bType="INT8U"/>
+			<DA name="stVal" fc="ST" bType="INT32" dchg="true"/>
+			<DA name="q" fc="ST" bType="Quality" qchg="true"/>
+			<DA name="t" fc="ST" bType="Timestamp"/>
+			<DA name="stSeld" fc="ST" bType="BOOLEAN" dchg="true"/>
+			<DA name="subEna" fc="SV" bType="BOOLEAN"/>
+			<DA name="subVal" fc="SV" bType="INT32"/>
+			<DA name="subQ" fc="SV" bType="Quality"/>
+			<DA name="subID" fc="SV" bType="VisString64"/>
+			<DA name="ctlModel" fc="CF" bType="Enum" type="ctlModel"/>
+			<DA name="sboTimeout" fc="CF" bType="INT32U"/>
+			<DA name="sboClass" fc="CF" bType="Enum" type="sboClass"/>
+			<DA name="minVal" fc="CF" bType="INT32"/>
+			<DA name="maxVal" fc="CF" bType="INT32"/>
+			<DA name="stepSize" fc="CF" bType="INT32"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_DPL" cdc="DPL" desc="设备铭牌类">
+			<DA bType="VisString255" name="vendor" fc="DC"/>
+			<DA bType="VisString255" name="hwRev" fc="DC"/>
+			<DA bType="VisString255" name="swRev" fc="DC"/>
+			<DA bType="VisString255" name="serNum" fc="DC"/>
+			<DA bType="VisString255" name="model" fc="DC"/>
+			<DA bType="VisString255" name="location" fc="DC"/>
+		</DOType>
+		<DOType id="WHJY_LPL_LN0" cdc="LPL" desc="逻辑节点铭牌类(用于逻辑节点LLN0)">
+			<DA bType="VisString255" name="vendor" fc="DC"/>
+			<DA bType="VisString255" name="swRev" fc="DC"/>
+			<DA bType="VisString255" name="d" fc="DC"/>
+			<DA bType="Unicode255" name="dU" fc="DC"/>
+			<DA bType="VisString255" name="configRev" fc="DC"/>
+			<DA bType="VisString255" name="ldNs" fc="EX">
+				<Val>IEC 61850-7-4:2003</Val>
+			</DA>
+		</DOType>
+		<DOType id="WHJY_LPL" cdc="LPL" desc="逻辑节点铭牌类">
+			<DA bType="VisString255" name="vendor" fc="DC"/>
+			<DA bType="VisString255" name="swRev" fc="DC"/>
+			<DA bType="VisString255" name="d" fc="DC"/>
+			<DA bType="Unicode255" name="dU" fc="DC"/>
+			<DA bType="VisString255" name="lnNs" fc="EX"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SP" cdc="ASG" desc="包含浮点型和整形">
+			<DA name="setMag" fc="SP" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SP_F" cdc="ASG" desc="用于浮点型">
+			<DA name="setMag" fc="SP" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SP_I" cdc="ASG" desc="用于整型">
+			<DA name="setMag" fc="SP" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SG" cdc="ASG" desc="包含浮点型和整形">
+			<DA name="setMag" fc="SG" bType="Struct" type="WHJY_AnalogueValue"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SG_F" cdc="ASG" desc="用于浮点型">
+			<DA name="setMag" fc="SG" bType="Struct" type="WHJY_AnalogueValue_F"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SG_I" cdc="ASG" desc="用于整型">
+			<DA name="setMag" fc="SG" bType="Struct" type="WHJY_AnalogueValue_I"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SE" cdc="ASG" desc="包含浮点型和整形">
+			<DA name="setMag" fc="SE" bType="Struct" type="WHJY_AnalogueValue"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SE_F" cdc="ASG" desc="用于浮点型">
+			<DA name="setMag" fc="SE" bType="Struct" type="WHJY_AnalogueValue_F"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_F" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<DOType id="WHJY_ASG_SE_I" cdc="ASG" desc="用于整型">
+			<DA name="setMag" fc="SE" bType="Struct" type="WHJY_AnalogueValue_I"/>
+			<DA name="units" fc="CF" bType="Struct" type="WHJY_units" dchg="true"/>
+			<DA name="sVC" fc="CF" bType="Struct" type="WHJY_ScaledValueConfig" dchg="true"/>
+			<DA name="minVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="maxVal" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="stepSize" fc="CF" bType="Struct" type="WHJY_AnalogueValue_I" dchg="true"/>
+			<DA name="d" fc="DC" bType="VisString255"/>
+			<DA name="dU" fc="DC" bType="Unicode255"/>
+			<DA name="cdcNs" fc="EX" bType="VisString255"/>
+			<DA name="cdcName" fc="EX" bType="VisString255"/>
+			<DA name="dataNs" fc="EX" bType="VisString255"/>
+		</DOType>
+		<!--数据属性定义-->
+		<DAType id="WHJY_AnalogueValue">
+			<BDA bType="FLOAT32" name="f"/>
+			<BDA bType="INT32" name="i"/>
+		</DAType>
+		<DAType id="WHJY_AnalogueValue_F">
+			<BDA bType="FLOAT32" name="f"/>
+		</DAType>
+		<DAType id="WHJY_AnalogueValue_I">
+			<BDA bType="INT32" name="i"/>
+		</DAType>
+		<DAType id="WHJY_units">
+			<BDA bType="Enum" type="SIUnit" name="SIUnit"/>
+			<BDA bType="Enum" type="multiplier" name="multiplier"/>
+		</DAType>
+		<DAType id="WHJY_INC_SelectWithValue">
+			<BDA name="ctlVal" bType="INT32"/>
+			<BDA name="operTm" bType="Timestamp"/>
+			<BDA name="origin" bType="Struct" type="Originator"/>
+			<BDA name="ctlNum" bType="INT8U"/>
+			<BDA name="T" bType="EntryTime"/>
+			<BDA name="Test" bType="BOOLEAN"/>
+			<BDA name="Check" bType="Dbpos"/>
+		</DAType>
+		<DAType id="WHJY_INC_Operate">
+			<BDA name="ctlVal" bType="INT32"/>
+			<BDA name="operTm" bType="Timestamp"/>
+			<BDA name="origin" bType="Struct" type="Originator"/>
+			<BDA name="ctlNum" bType="INT8U"/>
+			<BDA name="T" bType="EntryTime"/>
+			<BDA name="Test" bType="BOOLEAN"/>
+			<BDA name="Check" bType="Dbpos"/>
+		</DAType>
+		<DAType id="WHJY_INC_Cancel">
+			<BDA name="ctlVal" bType="INT32"/>
+			<BDA name="operTm" bType="Timestamp"/>
+			<BDA name="origin" bType="Struct" type="Originator"/>
+			<BDA name="ctlNum" bType="INT8U"/>
+			<BDA name="T" bType="EntryTime"/>
+			<BDA name="Test" bType="BOOLEAN"/>
+		</DAType>
+		<DAType id="Originator">
+			<BDA name="orCat" bType="Enum" type="orCatEnum"/>
+			<BDA name="orIdent" bType="Octet64"/>
+		</DAType>
+		<DAType id="WHJY_ScaledValueConfig">
+			<BDA name="scaleFactor" bType="FLOAT32"/>
+			<BDA name="offset" bType="FLOAT32"/>
+		</DAType>
+		<EnumType id="ctlModel">
+			<EnumVal ord="0">status-only</EnumVal>
+			<EnumVal ord="1">direct-with-normal-security</EnumVal>
+			<EnumVal ord="2">sbo-with-normal-security</EnumVal>
+			<EnumVal ord="3">direct-with-enhanced-security</EnumVal>
+			<EnumVal ord="4">sbo-with-enhanced-security</EnumVal>
+		</EnumType>
+		<EnumType id="sboClass">
+			<EnumVal ord="0">operate-once</EnumVal>
+			<EnumVal ord="1">operate-many</EnumVal>
+		</EnumType>
+		<EnumType id="orCategory">
+			<EnumVal ord="0">not-supported</EnumVal>
+			<EnumVal ord="1">bay-control</EnumVal>
+			<EnumVal ord="2">station-control</EnumVal>
+			<EnumVal ord="3">remote-control</EnumVal>
+			<EnumVal ord="4">automatic-bay</EnumVal>
+			<EnumVal ord="5">automatic-station</EnumVal>
+			<EnumVal ord="6">automatic-remote</EnumVal>
+			<EnumVal ord="7">maintenance</EnumVal>
+			<EnumVal ord="8">process</EnumVal>
+		</EnumType>
+		<EnumType id="angidCMV">
+			<EnumVal ord="0">V</EnumVal>
+			<EnumVal ord="1">A</EnumVal>
+			<EnumVal ord="2">other</EnumVal>
+		</EnumType>
+		<EnumType id="angid">
+			<EnumVal ord="0">Va</EnumVal>
+			<EnumVal ord="1">Vb</EnumVal>
+			<EnumVal ord="2">Vc</EnumVal>
+			<EnumVal ord="3">Aa</EnumVal>
+			<EnumVal ord="4">Ab</EnumVal>
+			<EnumVal ord="5">Ac</EnumVal>
+			<EnumVal ord="6">Vab</EnumVal>
+			<EnumVal ord="7">Vbc</EnumVal>
+			<EnumVal ord="8">Vca</EnumVal>
+		</EnumType>
+		<EnumType id="multiplier">
+			<EnumVal ord="-24">y</EnumVal>
+			<EnumVal ord="-21">z</EnumVal>
+			<EnumVal ord="-18">a</EnumVal>
+			<EnumVal ord="-15">f</EnumVal>
+			<EnumVal ord="-12">p</EnumVal>
+			<EnumVal ord="-9">n</EnumVal>
+			<EnumVal ord="-6">μ</EnumVal>
+			<EnumVal ord="-3">m</EnumVal>
+			<EnumVal ord="-2">c</EnumVal>
+			<EnumVal ord="-1">d</EnumVal>
+			<EnumVal ord="0"/>
+			<EnumVal ord="1">da</EnumVal>
+			<EnumVal ord="2">h</EnumVal>
+			<EnumVal ord="3">k</EnumVal>
+			<EnumVal ord="9">G</EnumVal>
+			<EnumVal ord="12">T</EnumVal>
+			<EnumVal ord="15">P</EnumVal>
+			<EnumVal ord="18">E</EnumVal>
+			<EnumVal ord="21">Z</EnumVal>
+			<EnumVal ord="24">Y</EnumVal>
+		</EnumType>
+		<EnumType id="SIUnit">
+			<EnumVal ord="1"/>
+			<EnumVal ord="2">m</EnumVal>
+			<EnumVal ord="3">kg</EnumVal>
+			<EnumVal ord="4">s</EnumVal>
+			<EnumVal ord="5">A</EnumVal>
+			<EnumVal ord="6">K</EnumVal>
+			<EnumVal ord="7">mol</EnumVal>
+			<EnumVal ord="8">cd</EnumVal>
+			<EnumVal ord="9">deg</EnumVal>
+			<EnumVal ord="10">rad</EnumVal>
+			<EnumVal ord="11">sr</EnumVal>
+			<EnumVal ord="21">Gy</EnumVal>
+			<EnumVal ord="22">q</EnumVal>
+			<EnumVal ord="23">°C</EnumVal>
+			<EnumVal ord="24">Sv</EnumVal>
+			<EnumVal ord="25">F</EnumVal>
+			<EnumVal ord="26">C</EnumVal>
+			<EnumVal ord="27">S</EnumVal>
+			<EnumVal ord="28">H</EnumVal>
+			<EnumVal ord="29">V</EnumVal>
+			<EnumVal ord="30">ohm</EnumVal>
+			<EnumVal ord="31">J</EnumVal>
+			<EnumVal ord="32">N</EnumVal>
+			<EnumVal ord="33">Hz</EnumVal>
+			<EnumVal ord="34">lx</EnumVal>
+			<EnumVal ord="35">Lm</EnumVal>
+			<EnumVal ord="36">Wb</EnumVal>
+			<EnumVal ord="37">T</EnumVal>
+			<EnumVal ord="38">W</EnumVal>
+			<EnumVal ord="39">Pa</EnumVal>
+			<EnumVal ord="41">m²</EnumVal>
+			<EnumVal ord="42">m³</EnumVal>
+			<EnumVal ord="43">m/s</EnumVal>
+			<EnumVal ord="47">M</EnumVal>
+			<EnumVal ord="50">W/m K</EnumVal>
+			<EnumVal ord="51">J/K</EnumVal>
+			<EnumVal ord="52">ppm</EnumVal>
+			<EnumVal ord="53">1/s</EnumVal>
+			<EnumVal ord="54">rad/s</EnumVal>
+			<EnumVal ord="61">VA</EnumVal>
+			<EnumVal ord="62">W</EnumVal>
+			<EnumVal ord="63">VAr</EnumVal>
+			<EnumVal ord="64">°</EnumVal>
+			<EnumVal ord="65">CosΦ</EnumVal>
+			<EnumVal ord="66">Vs</EnumVal>
+			<EnumVal ord="67">V²</EnumVal>
+			<EnumVal ord="68">As</EnumVal>
+			<EnumVal ord="69">A2</EnumVal>
+			<EnumVal ord="70">A2t</EnumVal>
+			<EnumVal ord="71">VAh</EnumVal>
+			<EnumVal ord="72">Wh</EnumVal>
+			<EnumVal ord="73">VArh</EnumVal>
+			<EnumVal ord="74">V/Hz</EnumVal>
+			<EnumVal ord="75">dbm</EnumVal>
+		</EnumType>
+		<EnumType id="dir">
+			<EnumVal ord="0">unknown</EnumVal>
+			<EnumVal ord="1">forward</EnumVal>
+			<EnumVal ord="2">backward</EnumVal>
+			<EnumVal ord="3">both</EnumVal>
+		</EnumType>
+		<EnumType id="Beh">
+			<EnumVal ord="1">on</EnumVal>
+			<EnumVal ord="2">blocked</EnumVal>
+			<EnumVal ord="3">test</EnumVal>
+			<EnumVal ord="4">test/blocked</EnumVal>
+			<EnumVal ord="5">off</EnumVal>
+		</EnumType>
+		<EnumType id="Mod">
+			<EnumVal ord="1">on</EnumVal>
+			<EnumVal ord="2">blocked</EnumVal>
+			<EnumVal ord="3">test</EnumVal>
+			<EnumVal ord="4">test/blocked</EnumVal>
+			<EnumVal ord="5">off</EnumVal>
+		</EnumType>
+		<EnumType id="Health">
+			<EnumVal ord="1">Ok</EnumVal>
+			<EnumVal ord="2">Warning</EnumVal>
+			<EnumVal ord="3">Alarm</EnumVal>
+		</EnumType>
+	</DataTypeTemplates>
+</SCL>

@@ -1,0 +1,208 @@
+name: 版本发布
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+env:
+  # 仓库名称
+  PROJECT_NAME: ${{ github.event.repository.name }}
+  # 镜像地址
+  IMAGE_NAME: ${{ vars.DOCKER_IMAGE }}
+
+jobs:
+  build-and-push:
+    name: 构建并推送镜像（所有架构）
+    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Release:') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 设置 QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录 Docker 镜像仓库
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DOCKER_IMAGE }}
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 获取版本号（不带 v）
+        id: version
+        run: |
+          echo "version=$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+
+      - name: 构建并推送镜像
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          file: ./ci/Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
+            ${{ env.IMAGE_NAME }}:latest
+
+      - name: 推送成功，打印镜像信息
+        run: |
+          echo "镜像地址：$IMAGE_NAME"
+          echo "镜像标签：${{ steps.version.outputs.version }}"
+          echo "镜像摘要：${{ steps.docker_build.outputs.digest }}"
+
+  #  build-and-push:
+  #    name: 构建并推送镜像
+  #    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Release:') }}
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - name: 拉取代码
+  #        uses: actions/checkout@v4
+  #
+  #      - name: 设置 Node.js 环境
+  #        uses: actions/setup-node@v3
+  #        with:
+  #          node-version: 18
+  #          cache: yarn
+  #
+  #      - name: 安装依赖
+  #        run: yarn install --frozen-lockfile
+  #
+  #      - name: 构建静态资源
+  #        run: yarn build
+  #
+  #      - name: 安装 ncc
+  #        run: yarn global add @vercel/ncc
+  #
+  #      - name: 打包
+  #        run: ncc build dist/main.js -o app
+  #
+  #      - name: 设置 QEMU
+  #        uses: docker/setup-qemu-action@v3
+  #
+  #      - name: 设置 Docker Buildx
+  #        uses: docker/setup-buildx-action@v3
+  #
+  #      - name: 登录 Docker 镜像仓库
+  #        uses: docker/login-action@v3
+  #        with:
+  #          registry: ${{ vars.DOCKER_IMAGE }}
+  #          username: ${{ vars.DOCKER_USERNAME }}
+  #          password: ${{ secrets.DOCKER_PASSWORD }}
+  #
+  #      - name: 获取版本号 ( 不带 v )
+  #        id: version
+  #        run: |
+  #          echo "version=$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+  #
+  #      - name: 构建并推送镜像
+  #        id: docker_build
+  #        uses: docker/build-push-action@v5
+  #        with:
+  #          context: .
+  #          cache-from: type=gha
+  #          cache-to: type=gha,mode=max
+  #          file: ./ci/Dockerfile-ga
+  #          platforms: linux/amd64
+  #          push: true
+  #          tags: |
+  #            ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
+  #            ${{ env.IMAGE_NAME }}:latest
+  #
+  #      - name: 推送成功，打印镜像信息
+  #        run: |
+  #          echo "镜像地址：$IMAGE_NAME"
+  #          echo "镜像标签：${{ steps.version.outputs.version }}"
+  #          echo "镜像摘要：${{ steps.docker_build.outputs.digest }}"
+
+  #  build-and-push-arm32v7:
+  #    name: 构建并推送镜像（arm32v7）
+  #    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Release:') }}
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - name: 拉取代码
+  #        uses: actions/checkout@v4
+  #
+  #      - name: 设置 QEMU
+  #        uses: docker/setup-qemu-action@v3
+  #
+  #      - name: 设置 Docker Buildx
+  #        uses: docker/setup-buildx-action@v3
+  #
+  #      - name: 登录 Docker 镜像仓库
+  #        uses: docker/login-action@v3
+  #        with:
+  #          registry: ${{ vars.DOCKER_IMAGE }}
+  #          username: ${{ vars.DOCKER_USERNAME }}
+  #          password: ${{ secrets.DOCKER_PASSWORD }}
+  #
+  #      - name: 获取版本号 ( 不带 v )
+  #        id: version
+  #        run: |
+  #          echo "version=$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+  #
+  #      - name: 构建并推送镜像
+  #        id: docker_build
+  #        uses: docker/build-push-action@v5
+  #        with:
+  #          context: .
+  #          cache-from: type=gha
+  #          cache-to: type=gha,mode=max
+  #          file: ./ci/Dockerfile-arm32v7
+  #          platforms: linux/arm/v7
+  #          push: true
+  #          tags: |
+  #            ${{ env.IMAGE_NAME }}:arm32v7-${{ steps.version.outputs.version }}
+  #            ${{ env.IMAGE_NAME }}:latest
+  #
+  #      - name: 推送成功，打印镜像信息
+  #        run: |
+  #          echo "镜像地址：$IMAGE_NAME"
+  #          echo "镜像标签：arm32v7-${{ steps.version.outputs.version }}"
+  #          echo "镜像摘要：${{ steps.docker_build.outputs.digest }}"
+
+  tag-and-release:
+    name: 创建 Git Tag 和 Github Release
+    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Release:') }}
+    needs:
+      - build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Git
+        run: |
+          git config user.name 许盛
+          git config user.email 20691718@qq.com
+
+      - name: 获取版本号 ( 带 v )
+        id: version
+        run: |
+          echo "version=v$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+
+      - name: Git Tag
+        run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push --tags
+
+      - name: 创建 Github Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  # 前端容器
+  frontend:
+    image: registry.cn-hongkong.aliyuncs.com/xusheng/cmu-fe:5bc9a7975653d3bd84898022f95adf4d9de48f62
+    container_name: cmu-fe
+    restart: unless-stopped
+    ports:
+      - '8088:8080'
+    environment:
+      - API=http://host.docker.internal:3000
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      - backend
+
+  # 后端容器
+  backend:
+    image: registry.cn-hongkong.aliyuncs.com/xusheng/cmu-be:all-f9e31ed73e0c6e9bb776abc9c103273a924c3c76
+    container_name: cmu-be
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - /mnt:/mnt
+      - /proc:/host/proc:ro
+      - /media:/media
+      - /etc/netplan:/etc/netplan
+    environment:
+      - PORT=3000

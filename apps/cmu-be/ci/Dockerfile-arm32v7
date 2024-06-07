@@ -1,0 +1,30 @@
+FROM arm32v7/node:18 AS builder
+
+WORKDIR /project
+
+# 安装依赖
+RUN npm i -g pnpm @vercel/ncc
+COPY package.json pnpm-lock.yaml /project/
+RUN pnpm install
+
+# 构建
+COPY . /project
+RUN pnpm run build
+
+# 打包 \
+RUN ncc build dist/main.js -o app
+
+# ------------------------------ #
+FROM arm32v7/node:18-slim
+EXPOSE 3000
+
+# 安装 iproute2、vim
+RUN apt-get update && apt-get install -y iproute2
+# 删除 apt-get 缓存
+RUN apt-get clean
+
+WORKDIR /app
+
+COPY --from=builder /project/app/ ./
+
+CMD ["node", "index.js"]

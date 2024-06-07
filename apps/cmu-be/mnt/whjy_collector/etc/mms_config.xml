@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MMS_CFG>
+  <FileName>
+    <LogCfgFile>logcfg.xml</LogCfgFile>
+    <OsiCfgFile>osicfg.xml</OsiCfgFile>
+    <DatamapInputFile>datamap.cfg</DatamapInputFile>
+    <DatamapOutputFile>datamapout.cfg</DatamapOutputFile>
+  </FileName>
+  <SclFile>
+    <IcdFileDir>../icd</IcdFileDir>
+    <IcdFileName>ERDS-SDHD_ZHJC.icd</IcdFileName>
+    <IedName>SDHDcmd</IedName>
+    <APName>S1</APName>
+  </SclFile>
+  <MmsReport>
+    <ReportScanRate>2</ReportScanRate>
+    <BRCBBufferSize>10000</BRCBBufferSize>
+  </MmsReport>
+  <MmsLog>
+    <LogScanRate>2</LogScanRate>
+    <LogMaxEntries>200</LogMaxEntries>
+    <LogReasonTag>ReasonCode</LogReasonTag>
+    <SqliteFileName>mmslog.sqlite3</SqliteFileName>
+    <SqliteMaxRows>102</SqliteMaxRows>
+  </MmsLog>
+  <MmsMax>
+    <MaxDynamicTypes>200000</MaxDynamicTypes>
+    <MaxDynamicDoms>80</MaxDynamicDoms>
+    <MaxDynamicDomVars>4000</MaxDynamicDomVars>
+    <MaxDynamicDomNvls>400</MaxDynamicDomNvls>
+  </MmsMax>
+  <MmsFile>
+    <RootDir>/mnt/nand/fileHome</RootDir>
+  </MmsFile>
+</MMS_CFG>
