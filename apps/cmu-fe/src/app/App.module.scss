@@ -1,0 +1,15 @@
+.main {
+  height: 100vh;
+}
+
+:global(.ant-pro-page-container-children-container) {
+  padding-top: 16px !important;
+}
+
+:global(.ant-page-header) {
+  padding-bottom: 0 !important;
+}
+
+:global(.ant-modal-header) {
+  margin-bottom: 24px !important;
+}

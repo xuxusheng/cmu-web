@@ -1,0 +1,9 @@
+.main {
+  :global(.ant-pro-page-container-children-container) {
+    padding-top: 0;
+  }
+
+  :global(.ant-pro-card-body) {
+    padding: 12px !important;
+  }
+}

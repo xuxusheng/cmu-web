@@ -1,0 +1,116 @@
+name: 开发环境工作流
+on:
+  push:
+    branches:
+      - develop
+env:
+  # 仓库名称
+  PROJECT_NAME: ${{ github.event.repository.name }}
+  # dev 或 prod
+  STAGE: dev
+  # 镜像地址
+  IMAGE_NAME: ${{ vars.DOCKER_IMAGE }}
+  # 镜像标签
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    name: 构建并推送镜像
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarQube 代码质量扫描
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      - uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 设置 pnpm 环境
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: 安装依赖
+        run: pnpm install
+
+      - name: 构建静态资源
+        run: pnpm run build
+
+      - name: 设置 QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录 Docker 镜像仓库
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DOCKER_IMAGE }}
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 构建并推送镜像
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./ci/Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+      - name: 推送成功，打印镜像信息
+        run: |
+          echo "镜像地址：$IMAGE_NAME"
+          echo "镜像标签：$IMAGE_TAG"
+          echo "镜像摘要：${{ steps.docker_build.outputs.digest }}"
+
+  deploy-to-dev:
+    name: 发布到 GitOps 仓库（开发环境）
+    needs:
+      - build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v3
+        with:
+          repository: xuxusheng/gitops-configs
+          token: ${{ secrets.GITOPS_CONFIGS_TOKEN }}
+
+      - name: 准备 Kustomize 环境
+        uses: imranismail/setup-kustomize@v2
+
+      - name: 修改镜像版本号
+        run: |
+          cd app/$PROJECT_NAME/dev
+          kustomize edit set image $IMAGE_NAME:$IMAGE_TAG
+
+      - name: 提交并推送代码
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: |-
+            chore(${{ env.PROJECT_NAME }}): ${{ github.event.head_commit.message }}
+
+            Message: ${{ github.event.head_commit.message }}
+            Project: ${{ env.PROJECT_NAME }}
+            Image: ${{ env.IMAGE_NAME }}
+            Tag：${{ env.IMAGE_TAG }}

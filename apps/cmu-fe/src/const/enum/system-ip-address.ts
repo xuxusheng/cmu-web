@@ -1,0 +1,7 @@
+export enum OperstateEnums {
+  UP = 'UP',
+  DOWN = 'DOWN',
+  UNKNOWN = 'UNKNOWN',
+  NOTPRESENT = 'NOTPRESENT',
+  LOWERLAYERDOWN = 'LOWERLAYERDOWN'
+}

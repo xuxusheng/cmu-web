@@ -1,0 +1,9 @@
+:global(.ant-drawer .ant-pro-sider) {
+  background: linear-gradient(to bottom, #169e8c, #169e99);
+}
+
+.main {
+  :global(.ant-pro-layout-header) {
+    background: linear-gradient(to right, #169e8c, #169e99);
+  }
+}

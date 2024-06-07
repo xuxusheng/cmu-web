@@ -1,0 +1,20 @@
+.main {
+  height: 100vh;
+  position: relative;
+
+  :global(.ant-pro-form-login-page-left) {
+    @media (min-width: 768px) {
+      max-width: none;
+    }
+  }
+
+  .footer {
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+    margin-top: 24px;
+  }
+}
