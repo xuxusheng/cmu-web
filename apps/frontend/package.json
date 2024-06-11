@@ -37,7 +37,8 @@
     "react-router-dom": "^6.23.1",
     "react-use": "^17.5.0",
     "socket.io-client": "^4.7.5",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "backend": "workspace:*"
   },
   "devDependencies": {
     "@types/loadable__component": "^5.13.9",
