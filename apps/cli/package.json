@@ -1,0 +1,52 @@
+{
+  "name": "cmu-cli",
+  "version": "0.1.2",
+  "description": "CMU - cli 工具",
+  "main": "lib/index.ts",
+  "private": false,
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "start": "rimraf dist && tsc --watch",
+    "build:esbuild": "rimraf dist && esno build/index.ts",
+    "build": "npm run build:esbuild",
+    "t": "esno lib/t.ts"
+  },
+  "files": [
+    "bin",
+    "dist",
+    ".npmrc"
+  ],
+  "bin": {
+    "cmu": "bin/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.30",
+    "@types/rimraf": "^4.0.5",
+    "@types/semver": "^7.5.8",
+    "@types/xml2js": "^0.4.14",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "esbuild": "^0.20.2",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.16",
+    "ora": "^8.0.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "dayjs": "^1.11.10",
+    "execa": "^8.0.1",
+    "semver": "^7.6.0",
+    "xlsx": "^0.18.5",
+    "xml2js": "^0.6.2"
+  }
+}
