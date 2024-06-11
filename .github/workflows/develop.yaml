@@ -18,43 +18,9 @@ jobs:
     name: 构建并推送镜像
     runs-on: ubuntu-latest
 
-    # To use Turborepo Remote Caching, set the following environment variables for the job.
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-
     steps:
       - name: 拉取代码
         uses: actions/checkout@v4
-
-      - name: Cache turbo build setup
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
-
-      - name: 设置 pnpm 环境
-        uses: pnpm/action-setup@v4
-
-      - name: 设置 Node.js 环境
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: 安装依赖
-        run: pnpm install
-
-      - name: 构建静态资源
-        run: pnpm run build
-
-      - name: 安装 ncc
-        run: pnpm add -g @vercel/ncc
-
-      - name: 打包
-        run: ncc build dist/main.js -o app
 
       - name: 设置 QEMU
         uses: docker/setup-qemu-action@v3
