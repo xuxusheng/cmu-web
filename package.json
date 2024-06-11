@@ -2,7 +2,7 @@
   "name": "cmu-web",
   "private": true,
   "scripts": {
-    "build": "turbo run build --cache-dir=.turbo",
+    "build": "turbo run build --cache-dir=.turbo --filter=frontend --filter=backend",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
