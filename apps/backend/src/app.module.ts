@@ -9,13 +9,15 @@ import { OpenapiModule } from './module/openapi/openapi.module'
 import { SensorModule } from './module/sersor/sensor.module'
 import { SystemModule } from './module/system/system.module'
 import { UserModule } from './module/user/user.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '../../', 'frontend'),
-    //   exclude: ['/api/(.*)']
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'frontend'),
+      exclude: ['/api/(.*)']
+    }),
     CoreModule,
     HealthModule,
     AuthModule,
@@ -28,4 +30,5 @@ import { UserModule } from './module/user/user.module'
     OpenapiModule
   ]
 })
-export class AppModule {}
+export class AppModule {
+}
