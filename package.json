@@ -5,10 +5,14 @@
     "build": "turbo run build --cache-dir=.turbo --filter=frontend --filter=backend",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "turbo": "latest"
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "husky": "^9.0.11",
+    "turbo": "^2.0.6"
   },
   "engines": {
     "node": ">=18"
