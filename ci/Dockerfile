@@ -6,7 +6,7 @@ WORKDIR /project
 
 RUN npm i -g @vercel/ncc
 
-COPY . .
+COPY .. .
 RUN pnpm install && pnpm run build
 
 # 打包

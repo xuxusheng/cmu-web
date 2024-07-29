@@ -22,29 +22,6 @@ jobs:
       - name: 拉取代码
         uses: actions/checkout@v4
 
-      - name: 设置 pnpm 环境
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: 设置 Node.js 环境
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: 安装依赖
-        run: pnpm install
-
-      - name: 构建静态资源
-        run: pnpm run build
-
-      - name: 安装 ncc
-        run: pnpm add -g @vercel/ncc
-
-      - name: 打包
-        run: ncc build dist/main.js -o app
-
       - name: 设置 QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -65,7 +42,9 @@ jobs:
           context: .
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64
+          file: ./ci/Dockerfile
+          # platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 

@@ -1,0 +1,54 @@
+name: 版本发布申请
+on:
+  workflow_dispatch:
+    branches:
+      - main
+    inputs:
+      version:
+        description: '选择要发布的版本类型'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  version:
+    name: 更新版本并创建 PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 设置 Git
+        run: |
+          git config user.name 许盛
+          git config user.email 20691718@qq.com
+
+      - name: 更新版本号和 Changelog
+        id: update_version
+        run: |
+          npx standard-version -r ${{ github.event.inputs.version }} --skip.tag
+          echo "version=$(npm pkg get version | tr -d '\"')" >> $GITHUB_OUTPUT
+
+      - name: 创建 Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: release/v${{ steps.update_version.outputs.version }}
+          title: 'Release: v${{ steps.update_version.outputs.version }} PR'
+          body: |
+            ## Changelog
+            ${{ steps.update_version.outputs.version }}
+          labels: release
+          base: main
