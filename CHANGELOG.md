@@ -1,5 +1,17 @@
-# CMU - 更新日志 
+# CMU-WEB - 更新日志 
 
+
+### [0.0.3](https://github.com/xuxusheng/cmu-web/compare/v0.0.2...v0.0.3) (2024-07-29)
+
+
+### 👷‍ Build System | 构建
+
+* 补全依赖 ([674b2c6](https://github.com/xuxusheng/cmu-web/commit/674b2c6488951cd8bfe87708ba585a0ab5740a4a))
+
+
+### ✨ Features | 新功能
+
+* 修改 changelog 标题 ([831aa9c](https://github.com/xuxusheng/cmu-web/commit/831aa9c5dc76d39a972757485015890aaa614e86))
 
 ### 0.0.2 (2024-07-29)
 
