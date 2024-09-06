@@ -69,18 +69,24 @@ export class ConfigFileService {
     }
 
     // 判断一下目录下是否存在非软连接的同名文件
-    const configFilePath = path.join(this.configDir, `${type}`)
-    if (
-      fs.existsSync(configFilePath) &&
-      !fs.lstatSync(configFilePath).isSymbolicLink()
-    ) {
-      throw new InternalServerErrorException(
-        `应用为${ConfigFileTypeLabelMap[type]}失败，目录下已存在名为 ${type} 的非软链文件`
-      )
-    }
+    // const configFilePath = path.join(this.configDir, `${type}`)
+    // if (
+    //   fs.existsSync(configFilePath) &&
+    //   !fs.lstatSync(configFilePath).isSymbolicLink()
+    // ) {
+    //   throw new InternalServerErrorException(
+    //     `应用为${ConfigFileTypeLabelMap[type]}失败，目录下已存在名为 ${type} 的非软链文件`
+    //   )
+    // }
+    //
+    // if (fs.existsSync(configFilePath)) {
+    //   // 先解除软链
+    //   fs.unlinkSync(configFilePath)
+    // }
 
+    const configFilePath = path.join(this.configDir, `${type}`)
+    // 如果已存在，就直接删掉
     if (fs.existsSync(configFilePath)) {
-      // 先解除软链
       fs.unlinkSync(configFilePath)
     }
 
