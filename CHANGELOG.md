@@ -1,6 +1,18 @@
 # CMU-WEB - 更新日志 
 
 
+### [0.0.4](https://github.com/xuxusheng/cmu-web/compare/v0.0.3...v0.0.4) (2024-09-06)
+
+
+### 📦 Chores | 其他更新
+
+* host 默认使用 0.0.0.0 ([39aa08e](https://github.com/xuxusheng/cmu-web/commit/39aa08e12496f0ca0a8965dd7c5f58fe461feb4b))
+
+
+### ✨ Features | 新功能
+
+* 应用配置文件时先删除已有的 ([6f265bb](https://github.com/xuxusheng/cmu-web/commit/6f265bbc6671b582cbf563f9fb739eb764431f00))
+
 ### [0.0.3](https://github.com/xuxusheng/cmu-web/compare/v0.0.2...v0.0.3) (2024-07-29)
 
 
