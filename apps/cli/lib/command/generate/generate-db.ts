@@ -4,6 +4,7 @@ import { copySync, removeSync } from 'fs-extra'
 import path from 'node:path'
 import ora from 'ora'
 import { exit } from 'process'
+
 import { SenAttrModelEntity, SenCfgTblEntity } from '../../entity/entity'
 import { generateOutputFilename } from '../../utils/file'
 import { logger } from '../../utils/logger'

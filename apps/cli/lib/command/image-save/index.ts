@@ -2,6 +2,7 @@ import inquirer from 'inquirer'
 import { execSync } from 'node:child_process'
 import ora from 'ora'
 import semver from 'semver/preload'
+
 import { logger } from '../../utils/logger'
 import { BE_IMAGE, FE_IMAGE } from './const'
 import { pullImage } from './pull-image'

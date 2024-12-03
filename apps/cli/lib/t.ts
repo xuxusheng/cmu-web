@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+
 import { generateIcd } from './command/generate/generate-icd'
 ;(async () => {
   await generateIcd({
