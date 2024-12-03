@@ -1,6 +1,6 @@
 import { lazy } from '@loadable/component'
 import { Suspense } from 'react'
-import { Navigate, RouteObject } from 'react-router-dom'
+import { Navigate, RouteObject } from 'react-router'
 
 import { App } from '../app/App.tsx'
 import { PageLoading } from '../component/page-loading'

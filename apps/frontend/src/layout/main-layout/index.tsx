@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Dropdown, Flex, FloatButton, Space, Typography } from 'antd'
 import dayjs from 'dayjs'
 import { FC, useMemo } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router'
 
 import { QueryKey } from '../../api/query-key.ts'
 import { userApi } from '../../api/user.ts'

@@ -7,7 +7,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { Divider, Flex, message, Skeleton, Space, Spin, Typography } from 'antd'
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { authApi } from '../../api/auth.ts'
 import { useSystemStore } from '../../store/system.ts'

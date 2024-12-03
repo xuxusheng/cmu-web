@@ -6,7 +6,7 @@ import {
 } from '@ant-design/pro-components'
 import { Badge, Typography } from 'antd'
 import { FC, useCallback, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useInterval } from 'react-use'
 
 import { sensorApi } from '../../api/sensor.ts'

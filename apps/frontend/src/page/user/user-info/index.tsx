@@ -11,7 +11,7 @@ import { Button, Form, Space, Tooltip, message } from 'antd'
 import { FC } from 'react'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { QueryKey } from '../../../api/query-key.ts'
 import { userApi } from '../../../api/user.ts'

@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useMount } from 'react-use'
 
 import { getToken } from '../utils/token.ts'

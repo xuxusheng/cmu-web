@@ -1,7 +1,7 @@
 import { App as AntApp, ConfigProvider, theme } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import { FC } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 import { useSystemStore } from '../store/system.ts'
 import styles from './App.module.scss'

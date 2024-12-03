@@ -2,7 +2,7 @@ import { HomeOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
 import { Col, Row } from 'antd'
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { IedRegisterCard } from './components/IedRegisterCard.tsx'
 import { NetworkCard } from './components/NetworkCard.tsx'
