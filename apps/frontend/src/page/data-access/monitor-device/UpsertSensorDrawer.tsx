@@ -18,6 +18,7 @@ import {
   message
 } from 'antd'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { sensorApi } from '../../../api/sensor.ts'
 

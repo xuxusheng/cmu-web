@@ -14,6 +14,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Form, Space, Spin, Tooltip, message } from 'antd'
 import { FC, useEffect } from 'react'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { systemConfigApi } from '../../../api/system-config.ts'
 import { CollectConfig } from '../../../interface/system-config.ts'

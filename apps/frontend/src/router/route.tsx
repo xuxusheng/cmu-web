@@ -1,6 +1,7 @@
 import { lazy } from '@loadable/component'
 import { Suspense } from 'react'
 import { Navigate, RouteObject } from 'react-router-dom'
+
 import { App } from '../app/App.tsx'
 import { PageLoading } from '../component/page-loading'
 import { LoginGuard } from '../guard/LoginGuard.tsx'

@@ -3,6 +3,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import { Col, Row } from 'antd'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { IedRegisterCard } from './components/IedRegisterCard.tsx'
 import { NetworkCard } from './components/NetworkCard.tsx'
 import { NtpConfigCard } from './components/NtpConfigCard.tsx'

@@ -8,6 +8,7 @@ import 'hover.css'
 import * as monaco from 'monaco-editor'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
+
 import './index.scss'
 import { router } from './router/router.ts'
 

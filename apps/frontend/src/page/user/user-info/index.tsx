@@ -12,6 +12,7 @@ import { FC } from 'react'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { useNavigate } from 'react-router-dom'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { userApi } from '../../../api/user.ts'
 

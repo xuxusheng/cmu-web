@@ -10,6 +10,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Form, Spin, Tooltip, message } from 'antd'
 import { FC, useEffect } from 'react'
+
 import { i2ConfigApi } from '../../../api/i2-config.ts'
 import { QueryKey } from '../../../api/query-key.ts'
 import { CacConfig } from '../../../interface/i2-config.ts'

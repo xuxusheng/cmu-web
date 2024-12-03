@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Modal, Spin, message } from 'antd'
 import * as ipAddr from 'ipaddr.js'
 import { FC, useEffect, useRef } from 'react'
+
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemApi } from '../../../../api/system.ts'
 import { UpdateIpAddressDto } from '../../../../interface/system.ts'

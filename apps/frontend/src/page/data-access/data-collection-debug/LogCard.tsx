@@ -16,6 +16,7 @@ import { groupBy, throttle } from 'lodash-es'
 import { FC, useRef, useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
 import { Socket, io } from 'socket.io-client'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { sensorDebugApi } from '../../../api/sensor-debug.ts'
 import { sensorApi } from '../../../api/sensor.ts'

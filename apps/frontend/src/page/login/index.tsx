@@ -1,22 +1,21 @@
-import { Divider, Flex, message, Skeleton, Space, Spin, Typography } from 'antd'
-import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { authApi } from '../../api/auth.ts'
-import BgVideo from './bg.mp4'
-import Bg from './bg.webp'
-import Logo from './logo.png'
-
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import {
   LoginFormPage,
   ProFormCaptcha,
   ProFormText
 } from '@ant-design/pro-components'
-
 import { useQuery } from '@tanstack/react-query'
+import { Divider, Flex, message, Skeleton, Space, Spin, Typography } from 'antd'
+import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { authApi } from '../../api/auth.ts'
 import { useSystemStore } from '../../store/system.ts'
 import { setToken } from '../../utils/token.ts'
+import BgVideo from './bg.mp4'
+import Bg from './bg.webp'
 import styles from './index.module.scss'
+import Logo from './logo.png'
 
 interface FormValues {
   username: string

@@ -15,6 +15,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Modal, Space, Tooltip, message } from 'antd'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { sensorApi } from '../../../api/sensor.ts'
 import { SensorVO } from '../../../interface/sensor.ts'

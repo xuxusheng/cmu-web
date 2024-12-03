@@ -9,6 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Form, Modal, Spin, message } from 'antd'
 import { FC, useEffect, useMemo, useRef } from 'react'
+
 import { i2SensorApi } from '../../../api/i2-sensor.ts'
 import { QueryKey } from '../../../api/query-key.ts'
 import { sensorApi } from '../../../api/sensor.ts'

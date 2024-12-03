@@ -3,6 +3,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import { Space } from 'antd'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { CacConfigCard } from './CacConfigCard.tsx'
 import { CagConfigCard } from './CagConfigCard.tsx'
 import { I2SensorCard } from './I2SensorCard.tsx'

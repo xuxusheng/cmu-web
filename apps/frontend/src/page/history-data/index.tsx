@@ -15,6 +15,7 @@ import dayjs from 'dayjs'
 import { camelCase, groupBy, isEqual, isNil, last, omitBy } from 'lodash-es'
 import { FC, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
 import { QueryKey } from '../../api/query-key.ts'
 import { sensorApi } from '../../api/sensor.ts'
 import { SensorReportData } from '../../interface/sensor.ts'

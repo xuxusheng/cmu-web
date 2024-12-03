@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Space, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useMemo } from 'react'
+
 import { QueryKey } from '../../api/query-key.ts'
 import { sensorApi } from '../../api/sensor.ts'
 import { SensorBasicStatus } from '../../interface/sensor.ts'

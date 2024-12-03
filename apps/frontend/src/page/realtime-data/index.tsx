@@ -15,10 +15,11 @@ import { clsx } from 'clsx'
 import dayjs from 'dayjs'
 import { FC, useEffect, useMemo, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
 import { QueryKey } from '../../api/query-key.ts'
 import { sensorApi } from '../../api/sensor.ts'
-import { SensorStatusPoint } from './SensorStatusPoint.tsx'
 import styles from './index.module.scss'
+import { SensorStatusPoint } from './SensorStatusPoint.tsx'
 
 const RealtimeDataPage: FC = () => {
   const navigate = useNavigate()

@@ -3,6 +3,7 @@ import { ProCard, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useQuery } from '@tanstack/react-query'
 import { Button, Modal, Space, Tooltip, Typography, message } from 'antd'
 import { FC, useState } from 'react'
+
 import { i2ConfigApi } from '../../../api/i2-config.ts'
 import { QueryKey } from '../../../api/query-key.ts'
 import { CagConfig } from '../../../interface/i2-config.ts'

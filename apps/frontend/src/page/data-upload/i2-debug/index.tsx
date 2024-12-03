@@ -3,6 +3,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import { Space } from 'antd'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { I2LogCard } from './I2LogCard.tsx'
 
 export const I2DebugPage: FC = () => {

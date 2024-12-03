@@ -10,6 +10,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Form, Space, Spin, message } from 'antd'
 import { FC, useEffect, useMemo } from 'react'
+
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemConfigApi } from '../../../../api/system-config.ts'
 import { NtpConfig } from '../../../../interface/system-config.ts'

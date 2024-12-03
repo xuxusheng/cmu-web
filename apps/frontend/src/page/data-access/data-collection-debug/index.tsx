@@ -4,6 +4,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import { Space } from 'antd'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { CollectConfigCard } from './CollectConfigCard.tsx'
 import { LogCard } from './LogCard.tsx'
 
