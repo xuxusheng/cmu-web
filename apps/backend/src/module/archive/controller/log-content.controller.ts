@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common'
+
 import { LogContentService } from '../service/log-content.service'
 
 @Controller('api/log_content')

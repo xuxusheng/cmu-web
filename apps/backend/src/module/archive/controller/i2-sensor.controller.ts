@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+
 import { I2SensorService } from '../service/i2-sensor.service'
 
 @Controller('api/i2_sensors')

@@ -4,6 +4,7 @@ import { spawnSync } from 'child_process'
 import { lstatSync, readFileSync, writeFileSync } from 'fs'
 import net from 'net'
 import YAML from 'yaml'
+
 import { gMmsConfig } from '../../core/config/g-mms.config'
 
 const netplanFilePath = '/etc/netplan/01-network-manager-all.yaml'

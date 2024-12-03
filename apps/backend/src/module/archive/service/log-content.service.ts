@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config'
 import { execSync } from 'child_process'
 import { createReadStream } from 'fs'
 import { chdir } from 'process'
-
 import { createInterface } from 'readline'
+
 import { gMmsConfig } from '../../core/config/g-mms.config'
 import { getLogDirAndFileName } from '../../shared/utils/file'
 

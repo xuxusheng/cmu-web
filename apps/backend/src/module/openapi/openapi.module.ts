@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+
 import { AuthModule } from '../auth/auth.module'
 import { I2Module } from '../i2/i2.module'
 import { SensorModule } from '../sersor/sensor.module'

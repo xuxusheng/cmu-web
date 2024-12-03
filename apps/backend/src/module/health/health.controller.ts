@@ -1,5 +1,6 @@
 import { All, Controller, HttpCode, HttpStatus } from '@nestjs/common'
 import { HealthCheck } from '@nestjs/terminus'
+
 import { Public } from '../shared/decorator/public'
 
 @Controller('actuator/health')

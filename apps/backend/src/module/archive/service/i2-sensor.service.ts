@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Knex } from 'knex'
 import net from 'net'
+
 import { I2SensorTblEntity } from '../../shared/model/entity/cfg-i2/i2-sensor-tbl.entity'
 import { KnexService } from '../../shared/service/knex.service'
 import { str2Int } from '../../shared/utils/parse-int'

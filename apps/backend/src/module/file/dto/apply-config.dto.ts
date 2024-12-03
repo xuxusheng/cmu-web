@@ -1,4 +1,5 @@
 import { IsIn, IsNotEmpty, IsString } from 'class-validator'
+
 import { ConfigFileType } from '../enum/config'
 
 // 应用配置文件

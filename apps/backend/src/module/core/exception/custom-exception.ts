@@ -1,4 +1,5 @@
 import { HttpStatus } from '@nestjs/common'
+
 import { ErrCode } from './error-code'
 
 export class BaseException {

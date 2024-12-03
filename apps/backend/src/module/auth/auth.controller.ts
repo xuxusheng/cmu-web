@@ -7,6 +7,7 @@ import {
   Logger,
   Post
 } from '@nestjs/common'
+
 import { Public } from '../shared/decorator/public'
 import { AuthService } from './auth.service'
 import { LoginByPasswordDto } from './dto/login-by-password.dto'

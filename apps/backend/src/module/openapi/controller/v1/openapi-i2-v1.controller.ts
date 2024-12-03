@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common'
+
 import { OpenapiI2SensorDataPageDto } from '../../dto/openapi-i2-sensor-data-page.dto'
 import { OpenapiI2SensorPageDto } from '../../dto/openapi-i2-sensor-page.dto'
 import { OpenapiI2Service } from '../../service/openapi-i2.service'

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { Knex } from 'knex'
 import { Socket } from 'net'
+
 import { NotFoundException } from '../core/exception/custom-exception'
 import { SenCfgTblEntity } from '../shared/model/entity/cfg/sen-cfg-tbl.entity'
 import { SenDebugModelEntity } from '../shared/model/entity/cfg/sen-debug-model.entity'

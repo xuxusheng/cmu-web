@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Knex } from 'knex'
+
 import { CfgI2Tables } from '../../shared/const/enum/table-name'
 import { I2CacTblEntity } from '../../shared/model/entity/cfg-i2/i2-cac-tbl.entity'
 import { KnexService } from '../../shared/service/knex.service'

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+
 import { SharedModule } from '../shared/shared.module'
 import { SensorDebugController } from './sensor-debug.controller'
 import { SensorDebugService } from './sensor-debug.service'

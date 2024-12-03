@@ -1,4 +1,5 @@
 import { IsIn, IsInt, IsNotEmpty, IsString } from 'class-validator'
+
 import { UserLevelEnum } from '../enum/user-level.enum'
 
 export class UserCreateDto {
