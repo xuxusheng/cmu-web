@@ -1,6 +1,27 @@
 # CMU-WEB - 更新日志 
 
 
+### [0.0.5](https://github.com/xuxusheng/cmu-web/compare/v0.0.4...v0.0.5) (2024-12-23)
+
+
+### 📦 Chores | 其他更新
+
+* cli 包加入 eslint 配置 ([32cc00a](https://github.com/xuxusheng/cmu-web/commit/32cc00a74dd18500893f85cf487afddab45e83dc))
+* 修改测试用 sqlite3 文件软链接指向 ([3bc51b7](https://github.com/xuxusheng/cmu-web/commit/3bc51b7040db7f22a55e6cd11fefc08acb7728d2))
+* 前端代码加入 eslint 相关配置 ([769f9a2](https://github.com/xuxusheng/cmu-web/commit/769f9a240f3a58a19ca7f936bbe4929d9a51b5a8))
+* 升级 react-router 到 v7 ([32fd322](https://github.com/xuxusheng/cmu-web/commit/32fd32256f4898e401ea8b376ad5c0ef8358efd2))
+* 后端代码加入 eslint 相关配置 ([9a2fa91](https://github.com/xuxusheng/cmu-web/commit/9a2fa9100d04385256988a27973019a8b7ab30aa))
+* 更新依赖版本 ([35b01df](https://github.com/xuxusheng/cmu-web/commit/35b01df841978de33492148d9ee454f9291ead5b))
+* 更新依赖版本 ([1385f8a](https://github.com/xuxusheng/cmu-web/commit/1385f8a4efebe24d82184cd9b39a4729919074b4))
+* 移除无用的项目包 ([88038f2](https://github.com/xuxusheng/cmu-web/commit/88038f2623946c7613f5d3fc23a46dde1e878137))
+
+
+### ✨ Features | 新功能
+
+* 加入一键备份功能 ([78726d2](https://github.com/xuxusheng/cmu-web/commit/78726d2f40b4399b1fdcf8302cc641700669f643))
+* 加入应用版本号展示功能 ([db32ab3](https://github.com/xuxusheng/cmu-web/commit/db32ab3f413ae0c2ea9e86bdc0dcb73ccb693cfd))
+* 调整一键备份接口 sleep 代码位置到最后 ([0195b32](https://github.com/xuxusheng/cmu-web/commit/0195b329fb06c9a8ff0696a12a2e8cc32fa222bb))
+
 ### [0.0.4](https://github.com/xuxusheng/cmu-web/compare/v0.0.3...v0.0.4) (2024-09-06)
 
 
