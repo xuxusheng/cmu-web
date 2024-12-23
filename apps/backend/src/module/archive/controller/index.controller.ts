@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
+
 import { Result } from '../../shared/model/result'
 import { AuthenticateService } from '../service/authenticate.service'
 import { DoAttrService } from '../service/do-attr.service'

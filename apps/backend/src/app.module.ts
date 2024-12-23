@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
+
 import { ArchiveModule } from './module/archive/archive.module'
 import { AuthModule } from './module/auth/auth.module'
 import { CoreModule } from './module/core/core.module'
@@ -9,8 +12,6 @@ import { OpenapiModule } from './module/openapi/openapi.module'
 import { SensorModule } from './module/sersor/sensor.module'
 import { SystemModule } from './module/system/system.module'
 import { UserModule } from './module/user/user.module'
-import { ServeStaticModule } from '@nestjs/serve-static'
-import { join } from 'path'
 
 @Module({
   imports: [
@@ -30,5 +31,4 @@ import { join } from 'path'
     OpenapiModule
   ]
 })
-export class AppModule {
-}
+export class AppModule {}

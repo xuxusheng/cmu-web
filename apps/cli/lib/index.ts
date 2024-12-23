@@ -1,6 +1,6 @@
 import { Command } from 'commander'
-
 import * as process from 'process'
+
 import { handleGenerateCommand } from './command/generate'
 import { handleImageSaveCommand } from './command/image-save'
 import { name, version } from './utils/package-json'

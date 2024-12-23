@@ -8,6 +8,7 @@ import {
   Put,
   Query
 } from '@nestjs/common'
+
 import { I2SensorDto } from './dto/i2-sensor.dto'
 import { PageI2SensorDto } from './dto/page-i2-sensor.dto'
 import { I2SensorService } from './i2-sensor.service'

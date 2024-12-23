@@ -15,6 +15,9 @@ RUN ncc build apps/backend/dist/main.js -o app
 FROM node:20-slim
 EXPOSE 3000
 
+ARG APP_VERSION
+ENV APP_VERSION=$APP_VERSION
+
 # 设置时区
 ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive

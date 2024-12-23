@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { map, uniq } from 'lodash'
+
 import { NotFoundException } from '../core/exception/custom-exception'
 import { I2GroupTblEntity } from '../shared/model/entity/cfg-i2/i2-group-tbl.entity'
 import { I2SensorTblEntity } from '../shared/model/entity/cfg-i2/i2-sensor-tbl.entity'

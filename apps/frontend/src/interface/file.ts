@@ -6,3 +6,10 @@ export interface CmuFile {
   isSymbolicLink: boolean
   target?: string // 软链源文件地址
 }
+
+export interface BackupFile {
+  filename: string
+  filePath: string
+  size: number
+  lastModified: string // ISO 8601 格式
+}

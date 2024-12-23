@@ -7,6 +7,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Modal, Spin, message } from 'antd'
 import { FC, useEffect, useMemo, useRef } from 'react'
+
 import { i2ConfigApi } from '../../../api/i2-config.ts'
 import { QueryKey } from '../../../api/query-key.ts'
 import { CreateCagDto } from '../../../interface/i2-config.ts'

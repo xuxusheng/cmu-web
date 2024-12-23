@@ -1,4 +1,5 @@
 import 'express'
+
 import { UserInfoTblEntity } from './module/shared/model/entity/cfg/user-info-tbl.entity'
 
 declare module 'express' {

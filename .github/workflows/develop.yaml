@@ -44,9 +44,12 @@ jobs:
           cache-to: type=gha,mode=max
           file: ./ci/Dockerfile
           # platforms: linux/amd64,linux/arm64,linux/arm/v7
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          build-args: |
+            APP_VERSION=${{ env.IMAGE_TAG }}
 
       - name: 推送成功，打印镜像信息
         run: |

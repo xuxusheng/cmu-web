@@ -1,11 +1,12 @@
 import { HomeOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
 import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
+
 import { ConfigFileTable } from './ConfigFileTable.tsx'
 import { IcdFileTable } from './IcdFileTable.tsx'
-import { LogFileTable } from './LogFileTable.tsx'
 import styles from './index.module.scss'
+import { LogFileTable } from './LogFileTable.tsx'
 enum Tabs {
   Log = 'log',
   Config = 'config',

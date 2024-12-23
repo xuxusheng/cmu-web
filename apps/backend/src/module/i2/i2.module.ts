@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+
 import { SharedModule } from '../shared/shared.module'
 import { I2ConfigController } from './i2-config.controller'
 import { I2ConfigService } from './i2-config.service'

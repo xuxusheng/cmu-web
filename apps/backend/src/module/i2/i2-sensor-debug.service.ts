@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { Knex } from 'knex'
 import { Socket } from 'net'
+
 import { I2DebugModelEntity } from '../shared/model/entity/cfg-i2/i2-debug-model.entity'
 import { KnexService } from '../shared/service/knex.service'
 

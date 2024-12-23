@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs'
 import ora from 'ora'
 import { exit } from 'process'
 import xml2js from 'xml2js'
+
 import { logger } from '../../utils/logger'
 
 export const parseIcdXml = async (icdFilePath: string) => {

@@ -6,6 +6,7 @@ import { sign } from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
 import svgCaptcha from 'svg-captcha'
 import { Md5 } from 'ts-md5'
+
 import { jwtConfig } from '../core/config/jwt.config'
 import {
   BadRequestException,

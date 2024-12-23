@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs'
 import { LinkWithAddressInfo, RouteInfo } from 'iproute'
+
 import { HostStatus } from '../interface/host-status.ts'
 import { Res } from '../interface/res.ts'
 import {
@@ -12,6 +13,14 @@ import { request } from './request.tsx'
 
 class SystemApi {
   private readonly baseUrl = '/api'
+
+  getVersion = () => {
+    return request.get<
+      Res<{
+        version: string
+      }>
+    >(`${this.baseUrl}/system/version`)
+  }
 
   getHostStatus = () => {
     return request.get<Res<HostStatus>>(`/api/system/host-status`)

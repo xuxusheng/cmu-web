@@ -9,6 +9,7 @@ import {
   Put
 } from '@nestjs/common'
 import dayjs from 'dayjs'
+
 import { Result } from '../shared/model/result'
 import { RestartProcessDto } from './dto/restart-process.dto'
 import { SetLicenseDto } from './dto/set-license.dto'
@@ -19,6 +20,16 @@ import { SystemService } from './system.service'
 @Controller('api/system')
 export class SystemController {
   constructor(private systemSvc: SystemService) {}
+
+  /**
+   * 查询应用版本
+   */
+  @Get('version')
+  getVersion() {
+    return {
+      version: process.env.APP_VERSION
+    }
+  }
 
   /**
    * 设置系统时间

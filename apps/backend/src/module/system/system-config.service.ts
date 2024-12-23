@@ -1,10 +1,18 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
+import { sleep } from '@nestjs/terminus/dist/utils'
+import dayjs from 'dayjs'
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { ensureDirSync } from 'fs-extra'
 import { parse, stringify } from 'ini'
+import JSZip from 'jszip'
+import fs from 'node:fs'
+import path from 'node:path'
 import { join } from 'path'
+
 import { gMmsConfig } from '../core/config/g-mms.config'
+import { serverConfig } from '../core/config/server.config'
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -32,12 +40,21 @@ export class SystemConfigService {
 
   private readonly cfgDB = this.knexService.getCfgDB()
 
+  // 备份目录路径
+  private readonly backupDir: string
+
   constructor(
     // 配置
     @Inject(gMmsConfig.KEY)
     private gMmsConf: ConfigType<typeof gMmsConfig>,
+    @Inject(serverConfig.KEY)
+    private serverConf: ConfigType<typeof serverConfig>,
     private knexService: KnexService
-  ) {}
+  ) {
+    this.backupDir = path.join(this.serverConf.dataDir, 'backup')
+    // 确保目录存在
+    ensureDirSync(this.backupDir)
+  }
 
   private getMmsXmlPath = () => {
     const path = `${this.gMmsConf.gMmsEtcHome}/mms_config.xml`
@@ -241,10 +258,7 @@ export class SystemConfigService {
   }
 
   getNtpConfig = (): NtpConfig => {
-    const path = `${this.gMmsConf.gMmsEtcHome}/ntp.ini`
-
     const ntpConfig = this.getNtpIniConfig().ntp
-
     return {
       isUseSharedMem: ntpConfig.is_use_sharedMem === '1',
       ntpServerIp: ntpConfig.ntp_server_ip,
@@ -292,9 +306,10 @@ export class SystemConfigService {
       soundAlmDo: Number(configMap.get('soundAlmDo'))
     }
   }
+
   // 设置采集参数
   updateCollectConfig = async (dto: UpdateCollectConfigDto) => {
-    console.log(`dto`, dto)
+    this.logger.log(`设置采集参数：${dto}`)
 
     // 更新所有字段 开事务
     await this.cfgDB.transaction(async (trx) => {
@@ -307,5 +322,92 @@ export class SystemConfigService {
           .where({ key })
       }
     })
+  }
+
+  // 一键备份
+  generateBackupFile = async () => {
+    const { gMmsEtcHome, gMmsIcdHome } = this.gMmsConf
+
+    const mmsConfigFilePath = this.getMmsXmlPath()
+    if (!fs.existsSync(mmsConfigFilePath)) {
+      throw new InternalServerErrorException(`文件 ${mmsConfigFilePath} 不存在`)
+    }
+
+    const cfgSqlite3FilePath = path.join(gMmsEtcHome, 'cfg.sqlite3')
+    if (!fs.existsSync(cfgSqlite3FilePath)) {
+      throw new InternalServerErrorException(
+        `文件 ${cfgSqlite3FilePath} 不存在`
+      )
+    }
+
+    const cfgI2Sqlite3FilePath = path.join(gMmsEtcHome, 'cfg_i2.sqlite3')
+    if (!fs.existsSync(cfgI2Sqlite3FilePath)) {
+      throw new InternalServerErrorException(
+        `文件 ${cfgI2Sqlite3FilePath} 不存在`
+      )
+    }
+
+    if (!fs.existsSync(gMmsIcdHome)) {
+      throw new InternalServerErrorException(`目录 ${gMmsIcdHome} 不存在`)
+    }
+
+    // 制作压缩包
+    const zip = new JSZip()
+
+    zip.file('mms_config.xml', fs.readFileSync(mmsConfigFilePath))
+
+    zip.file('cfg.sqlite3', fs.readFileSync(cfgSqlite3FilePath))
+
+    zip.file('cfg_i2.sqlite3', fs.readFileSync(cfgI2Sqlite3FilePath))
+
+    // 压缩包中创建一个 icd 目录，用来存放 icd 文件
+    const zipIcdDir = zip.folder('icd')
+    for (const file of fs.readdirSync(gMmsIcdHome)) {
+      if (file.endsWith('.icd')) {
+        zipIcdDir.file(file, fs.readFileSync(path.join(gMmsIcdHome, file)))
+      }
+    }
+
+    const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' })
+
+    // 备份文件存储的路径
+    const now = dayjs()
+    const backupFileName = `CMU一键备份文件_${now.format('YYYYMMDD')}_${now.format('HHmmss')}.zip`
+    const backupFilePath = path.join(this.backupDir, backupFileName)
+
+    // 等待 1s，避免请求太快，用户 1s 内点击多次
+    await sleep(1000)
+    fs.writeFileSync(backupFilePath, zipBuffer)
+  }
+
+  // 查询备份文件
+  getBackupFiles = () => {
+    return fs.readdirSync(this.backupDir).map((filename) => {
+      const filePath = path.join(this.backupDir, filename)
+      const stat = fs.statSync(filePath)
+      return {
+        filename,
+        filePath,
+        size: stat.size,
+        lastModified: stat.mtime
+      }
+    })
+  }
+
+  // 删除备份文件
+  deleteBackupFile = (filename: string) => {
+    const filePath = this.getBackupFilePath(filename)
+    fs.unlinkSync(filePath)
+  }
+
+  // --------------------------------------------------------------------------
+  getBackupFilePath = (filename: string) => {
+    const filePath = path.join(this.backupDir, filename)
+
+    if (!this.backupDir || !fs.existsSync(filePath)) {
+      throw new NotFoundException(`文件 ${filename} 不存在`)
+    }
+
+    return filePath
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Knex } from 'knex'
 import { Md5 } from 'ts-md5'
+
 import { BadRequestException } from '../core/exception/custom-exception'
 import { UserInfoTblEntity } from '../shared/model/entity/cfg/user-info-tbl.entity'
 import { KnexService } from '../shared/service/knex.service'

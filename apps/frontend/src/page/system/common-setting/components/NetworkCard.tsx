@@ -6,6 +6,7 @@ import { ColumnsType } from 'antd/es/table'
 import * as ip from 'ipaddr.js'
 import { LinkWithAddressInfo } from 'iproute'
 import { FC, useMemo, useState } from 'react'
+
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemApi } from '../../../../api/system.ts'
 import { UpdateNetworkModal } from './UpdateNetworkModal.tsx'

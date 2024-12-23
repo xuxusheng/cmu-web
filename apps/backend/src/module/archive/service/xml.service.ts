@@ -2,7 +2,6 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
 import { readFileSync, readdirSync, writeFileSync } from 'fs'
-
 import * as ini from 'ini'
 
 import { gMmsConfig } from '../../core/config/g-mms.config'

@@ -1,5 +1,4 @@
 import { EditOutlined, FileOutlined } from '@ant-design/icons'
-
 import {
   ModalForm,
   ProCard,
@@ -12,6 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Form, Space, Spin, message } from 'antd'
 import prettyBytes from 'pretty-bytes'
 import { FC, useEffect } from 'react'
+
 import { QueryKey } from '../../../api/query-key.ts'
 import { systemConfigApi } from '../../../api/system-config.ts'
 import { LogConfig } from '../../../interface/system-config.ts'

@@ -15,6 +15,7 @@ import { throttle } from 'lodash-es'
 import { FC, useRef, useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
 import { Socket, io } from 'socket.io-client'
+
 import { i2SensorDebugApi } from '../../../api/i2-sensor-debug.ts'
 import { i2SensorApi } from '../../../api/i2-sensor.ts'
 import { QueryKey } from '../../../api/query-key.ts'

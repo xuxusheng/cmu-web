@@ -8,6 +8,7 @@ import {
 import { Button, Modal, Space, Tooltip, message } from 'antd'
 import dayjs from 'dayjs'
 import { FC, useRef, useState } from 'react'
+
 import { i2SensorApi } from '../../../api/i2-sensor.ts'
 import { I2SensorPageVO } from '../../../interface/i2-sensor.ts'
 import { UpsertI2SensorModal } from './UpsertI2SensorModal.tsx'

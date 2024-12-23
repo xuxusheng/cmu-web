@@ -3,6 +3,7 @@ import axios from 'axios'
 import { WinstonModule } from 'nest-winston'
 import * as winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'
+
 import { AppModule } from './app.module'
 
 axios.defaults.validateStatus = () => true

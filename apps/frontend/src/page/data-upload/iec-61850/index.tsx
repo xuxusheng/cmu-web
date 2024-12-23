@@ -2,7 +2,8 @@ import { HomeOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-components'
 import { Space } from 'antd'
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
+
 import { LogConfigCard } from './LogConfigCard.tsx'
 import { MmsConfigCard } from './MmsConfigCard.tsx'
 

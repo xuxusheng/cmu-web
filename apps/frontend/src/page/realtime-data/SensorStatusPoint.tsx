@@ -1,5 +1,6 @@
 import { Badge, Space, Tooltip } from 'antd'
 import { FC, useCallback } from 'react'
+
 import { SensorStatus } from '../../interface/sensor.ts'
 import styles from './SensorStatusPoint.module.scss'
 

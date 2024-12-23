@@ -1,4 +1,5 @@
 import { IsISO8601, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+
 import { PageDto } from '../../shared/dto/page.dto'
 
 export class OpenapiI2SensorDataPageDto extends PageDto {

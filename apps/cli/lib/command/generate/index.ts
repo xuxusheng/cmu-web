@@ -1,5 +1,6 @@
 import inquirer from 'inquirer'
 import * as path from 'path'
+
 import { getTemplateFiles } from '../../utils/file'
 import { logger } from '../../utils/logger'
 import { generate, GenerateFileType } from './generate'

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+
 import { DoattrsAllEntity } from '../../shared/model/entity/cfg/doattrs-all.entity'
 import { LnClassModelEntity } from '../../shared/model/entity/cfg/ln-class-model.entity'
 import { SenTypeModelEntity } from '../../shared/model/entity/cfg/sen-type-model.entity'

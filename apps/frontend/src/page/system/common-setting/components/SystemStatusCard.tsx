@@ -1,12 +1,13 @@
 import { DesktopOutlined, ReloadOutlined } from '@ant-design/icons'
 import { ProCard, StatisticCard } from '@ant-design/pro-components'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Button, Modal, Space, Tooltip, message } from 'antd'
+import { Button, message, Modal, Space, Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { sum } from 'lodash-es'
 import prettyBytes from 'pretty-bytes'
 import { FC, useMemo } from 'react'
 import { usePreviousDistinct } from 'react-use'
+
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemApi } from '../../../../api/system.ts'
 
@@ -32,6 +33,10 @@ export const SystemStatusCard: FC = () => {
     queryFn: () => systemApi.getMemory(),
     refetchInterval: 1000
   })
+  const versionQuery = useQuery({
+    queryKey: [QueryKey.SystemVersion],
+    queryFn: () => systemApi.getVersion()
+  })
 
   // ----------------------------- UseMemo -----------------------------
   const uptime = useMemo(
@@ -41,6 +46,10 @@ export const SystemStatusCard: FC = () => {
   const cpu = useMemo(() => cpuQuery.data?.data.data, [cpuQuery.data])
   const prevCpu = usePreviousDistinct(cpu)
   const memory = useMemo(() => memoryQuery.data?.data.data, [memoryQuery.data])
+  const version = useMemo(
+    () => versionQuery.data?.data.data.version,
+    [versionQuery]
+  )
 
   // cpu 占用率
   const cpuUsedRate = useMemo(() => {
@@ -113,6 +122,15 @@ export const SystemStatusCard: FC = () => {
         <Space>
           <DesktopOutlined />
           系统状态
+          {version && (
+            <Tag
+              style={{ marginBottom: 3 }}
+              color="processing"
+              bordered={false}
+            >
+              {version}
+            </Tag>
+          )}
         </Space>
       }
     >

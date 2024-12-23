@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
+
 import { I2GroupService } from '../service/i2-group.service'
 
 @Controller('api/i2_groups')
