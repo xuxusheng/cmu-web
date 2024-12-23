@@ -22,6 +22,16 @@ export class SystemController {
   constructor(private systemSvc: SystemService) {}
 
   /**
+   * 查询应用版本
+   */
+  @Get('version')
+  getVersion() {
+    return {
+      version: process.env.APP_VERSION
+    }
+  }
+
+  /**
    * 设置系统时间
    */
   @Put('time')

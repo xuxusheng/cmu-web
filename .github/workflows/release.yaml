@@ -55,6 +55,8 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
             ${{ env.IMAGE_NAME }}:latest
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.version }}
 
       - name: 推送成功，打印镜像信息
         run: |

@@ -29,6 +29,7 @@ export enum QueryKey {
   SensorDebugCommands = 'SensorDebugCommands', // 传感器调试命令
 
   // System
+  SystemVersion = 'SystemVersion', // 应用版本
   SystemTime = 'SystemTime', // 系统时间
   SystemUptime = 'SystemUptime', // 系统运行时间
   SystemCpu = 'SystemCpu', // CPU 信息
