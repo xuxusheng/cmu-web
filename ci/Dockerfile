@@ -10,7 +10,10 @@ COPY .. .
 RUN pnpm install && pnpm run build
 
 # 打包
-RUN ncc build apps/backend/dist/main.js -o app
+#RUN ncc build apps/backend/dist/main.js -o app
+# 当服务端代码中引用根目录的 package.json 文件时，构建出来的 dist 中目录结构会有所变化
+RUN ncc build apps/backend/dist/apps/backend/src/main.js -o app
+
 
 FROM node:20-slim
 EXPOSE 3000
