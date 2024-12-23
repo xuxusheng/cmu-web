@@ -326,9 +326,6 @@ export class SystemConfigService {
 
   // 一键备份
   generateBackupFile = async () => {
-    // 等待 1s，避免请求太快，用户 1s 内点击多次
-    await sleep(1000)
-
     const { gMmsEtcHome, gMmsIcdHome } = this.gMmsConf
 
     const mmsConfigFilePath = this.getMmsXmlPath()
@@ -377,6 +374,9 @@ export class SystemConfigService {
     const now = dayjs()
     const backupFileName = `CMU一键备份文件_${now.format('YYYYMMDD')}_${now.format('HHmmss')}.zip`
     const backupFilePath = path.join(this.backupDir, backupFileName)
+
+    // 等待 1s，避免请求太快，用户 1s 内点击多次
+    await sleep(1000)
     fs.writeFileSync(backupFilePath, zipBuffer)
   }
 
