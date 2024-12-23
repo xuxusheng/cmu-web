@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common'
 import dayjs from 'dayjs'
 
+import { version } from '../../../../../package.json'
+import { Public } from '../shared/decorator/public'
 import { Result } from '../shared/model/result'
 import { RestartProcessDto } from './dto/restart-process.dto'
 import { SetLicenseDto } from './dto/set-license.dto'
@@ -20,6 +22,15 @@ import { SystemService } from './system.service'
 @Controller('api/system')
 export class SystemController {
   constructor(private systemSvc: SystemService) {}
+
+  /**
+   * 查询当前版本，从 package.json 文件中读取
+   */
+  @Public()
+  @Get('version')
+  getVersion() {
+    return { version }
+  }
 
   /**
    * 设置系统时间
