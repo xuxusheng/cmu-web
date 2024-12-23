@@ -1,3 +1,4 @@
+import { BackupFile } from '../interface/file.ts'
 import { Res } from '../interface/res.ts'
 import {
   CollectConfig,
@@ -49,6 +50,26 @@ export class SystemConfigApi {
   // 更新采集参数
   updateCollectConfig = (data: CollectConfig) =>
     request.put(`${this.baseUrl}/collect`, data)
+
+  // 查询备份文件列表
+  listBackupFiles = () =>
+    request.get<Res<BackupFile[]>>(`${this.baseUrl}/backup-file/list`)
+
+  // 生成一键备份文件
+  generateBackupFile = () =>
+    request.post(`${this.baseUrl}/backup-file/generate`)
+
+  // 删除备份文件
+  deleteBackupFile = (filename: string) =>
+    request.delete(`${this.baseUrl}/backup-file/${filename}`)
+
+  // 下载一键备份文件
+  downloadBackupFile = (filename: string) => {
+    window.open(
+      `${this.baseUrl}/backup-file/download?filename=${filename}`,
+      '_self'
+    )
+  }
 }
 
 export const systemConfigApi = new SystemConfigApi()

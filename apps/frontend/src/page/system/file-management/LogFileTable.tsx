@@ -86,7 +86,7 @@ export const LogFileTable: FC = () => {
               type="text"
               onClick={() => handleDelete(entity.filename)}
             >
-              <DeleteOutlined />
+              <DeleteOutlined style={{ color: '#ff4d4f' }} />
             </Button>
           </Tooltip>
         </Space>

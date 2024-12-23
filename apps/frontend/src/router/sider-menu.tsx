@@ -80,6 +80,10 @@ export const siderMenu: ProLayoutProps['route'] = {
         {
           name: '文件管理',
           path: '/main/system/file-management'
+        },
+        {
+          name: '一键备份',
+          path: '/main/system/backup-file'
         }
       ]
     }

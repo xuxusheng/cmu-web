@@ -9,6 +9,7 @@ import { MainLayout } from '../layout/main-layout'
 import { DataCollectionDebugPage } from '../page/data-access/data-collection-debug'
 import { I2ConfigPage } from '../page/data-upload/i2-config'
 import { I2DebugPage } from '../page/data-upload/i2-debug'
+import { BackupFilePage } from '../page/system/backup-file'
 
 const LoginPage = lazy(() => import('../page/login'))
 const RealtimeStatusPage = lazy(() => import('../page/realtime-status'))
@@ -156,6 +157,14 @@ export const routes: RouteObject[] = [
                 element: (
                   <Suspense fallback={<PageLoading />}>
                     <FileManagementPage />
+                  </Suspense>
+                )
+              },
+              {
+                path: 'backup-file',
+                element: (
+                  <Suspense fallback={<PageLoading />}>
+                    <BackupFilePage />
                   </Suspense>
                 )
               },
