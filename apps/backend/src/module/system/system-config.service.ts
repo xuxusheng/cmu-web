@@ -369,7 +369,12 @@ export class SystemConfigService {
 
     // cfg.sqlite3 和 cfg_i2.sqlite3 两个文件如果都是软链接，备份时，需要备份原始文件
     if (fs.lstatSync(cfgSqlite3FilePath).isSymbolicLink()) {
-      const realPath = fs.readlinkSync(cfgSqlite3FilePath)
+      let realPath = fs.realpathSync(cfgSqlite3FilePath)
+      console.log(`cfg.sqlite3 软链接指向路径 ${realPath}`)
+      // 如果 realPath 为相对路径，需要计算一下绝对路径
+      if (!path.isAbsolute(realPath)) {
+        realPath = path.join(path.dirname(cfgSqlite3FilePath), realPath)
+      }
       this.logger.log(
         `cfg.sqlite3 软链接指向路径 ${realPath}，文件名为 ${path.basename(realPath)}`
       )
@@ -379,7 +384,10 @@ export class SystemConfigService {
     }
 
     if (fs.lstatSync(cfgI2Sqlite3FilePath).isSymbolicLink()) {
-      const realPath = fs.readlinkSync(cfgI2Sqlite3FilePath)
+      let realPath = fs.realpathSync(cfgI2Sqlite3FilePath)
+      if (!path.isAbsolute(realPath)) {
+        realPath = path.join(path.dirname(cfgI2Sqlite3FilePath), realPath)
+      }
       this.logger.log(
         `cfg_i2.sqlite3 软链接指向路径 ${realPath}，文件名为 ${path.basename(realPath)}`
       )
@@ -393,7 +401,7 @@ export class SystemConfigService {
     const appVersion = process.env.APP_VERSION
     if (appVersion) {
       zip.file(
-        'version.yaml',
+        'version.txt',
         YAML.stringify({
           备份时间: dayjs().format('YYYY-MM-DD HH:mm:ss'),
           'CMU-WEB 版本': appVersion,
