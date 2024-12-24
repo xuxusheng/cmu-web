@@ -1,6 +1,26 @@
 # CMU-WEB - 更新日志 
 
 
+### [0.0.6](https://github.com/xuxusheng/cmu-web/compare/v0.0.5...v0.0.6) (2024-12-24)
+
+
+### 📦 Chores | 其他更新
+
+* 优化日志打印规则 ([e2e4a8d](https://github.com/xuxusheng/cmu-web/commit/e2e4a8d747a90f9d40391b98d32057a79bee81e2))
+
+
+### ✨ Features | 新功能
+
+* 一键备份功能加入调试日志 ([1a87803](https://github.com/xuxusheng/cmu-web/commit/1a87803911ffd233a5bfe1de9fe7c7c51b7aba5d))
+* 加入更新日志请求接口 ([5c62ec9](https://github.com/xuxusheng/cmu-web/commit/5c62ec98b4c395238bb76ec4db04d5088856cccb))
+* 调整一键备份逻辑 ([638c17f](https://github.com/xuxusheng/cmu-web/commit/638c17fb03d1044953faa1b718b7e6d7f86a2775))
+* 通用设置页面加入更新日志展示功能 ([ffee63a](https://github.com/xuxusheng/cmu-web/commit/ffee63a415140412bbf16a2ab109ea451a1a02c7))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 一键备份功能兼容软链接绝对路径 ([1918ba8](https://github.com/xuxusheng/cmu-web/commit/1918ba83651367b9428548c98d3d7ce09e1d964a))
+
 ### [0.0.5](https://github.com/xuxusheng/cmu-web/compare/v0.0.4...v0.0.5) (2024-12-23)
 
 

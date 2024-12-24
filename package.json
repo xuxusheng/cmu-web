@@ -1,7 +1,7 @@
 {
   "name": "cmu-web",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "build": "turbo run build --cache-dir=.turbo --filter=frontend --filter=backend",
     "dev": "turbo dev",
