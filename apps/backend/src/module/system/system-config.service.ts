@@ -10,6 +10,7 @@ import JSZip from 'jszip'
 import fs from 'node:fs'
 import path from 'node:path'
 import { join } from 'path'
+import YAML from 'yaml'
 
 import { gMmsConfig } from '../core/config/g-mms.config'
 import { serverConfig } from '../core/config/server.config'
@@ -354,25 +355,52 @@ export class SystemConfigService {
     // 制作压缩包
     const zip = new JSZip()
 
+    // 加入 mms_config 文件
     zip.file('mms_config.xml', fs.readFileSync(mmsConfigFilePath))
 
-    zip.file('cfg.sqlite3', fs.readFileSync(cfgSqlite3FilePath))
+    // icd 文件具体备份哪一个，需要从 mms_config 中读取
+    const mmsConfig = this.getMmsXmlConfig()
+    const icdFileName = mmsConfig.MMS_CFG.SclFile.IcdFileName
+    const icdFilePath = path.join(gMmsIcdHome, icdFileName)
+    if (!fs.existsSync(icdFilePath)) {
+      throw new InternalServerErrorException(`ICD 文件 ${icdFilePath} 不存在`)
+    }
+    zip.file(icdFileName, fs.readFileSync(icdFilePath))
 
-    zip.file('cfg_i2.sqlite3', fs.readFileSync(cfgI2Sqlite3FilePath))
+    // cfg.sqlite3 和 cfg_i2.sqlite3 两个文件如果都是软链接，备份时，需要备份原始文件
+    if (fs.lstatSync(cfgSqlite3FilePath).isSymbolicLink()) {
+      const realPath = fs.readlinkSync(cfgSqlite3FilePath)
+      zip.file(path.basename(realPath), fs.readFileSync(realPath))
+    } else {
+      zip.file('cfg.sqlite3', fs.readFileSync(cfgSqlite3FilePath))
+    }
 
-    // 压缩包中创建一个 icd 目录，用来存放 icd 文件
-    const zipIcdDir = zip.folder('icd')
-    for (const file of fs.readdirSync(gMmsIcdHome)) {
-      if (file.endsWith('.icd')) {
-        zipIcdDir.file(file, fs.readFileSync(path.join(gMmsIcdHome, file)))
-      }
+    if (fs.lstatSync(cfgI2Sqlite3FilePath).isSymbolicLink()) {
+      const realPath = fs.readlinkSync(cfgI2Sqlite3FilePath)
+      zip.file(path.basename(realPath), fs.readFileSync(realPath))
+    } else {
+      zip.file('cfg_i2.sqlite3', fs.readFileSync(cfgI2Sqlite3FilePath))
     }
 
     const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' })
+    const now = dayjs()
+
+    const appVersion = process.env.APP_VERSION
+    if (appVersion) {
+      zip.file(
+        'version.yaml',
+        YAML.stringify({
+          备份时间: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+          'CMU-WEB 版本': appVersion,
+          'CMU-COLLECTOR 版本': '未知'
+        })
+      )
+    }
 
     // 备份文件存储的路径
-    const now = dayjs()
-    const backupFileName = `CMU一键备份文件_${now.format('YYYYMMDD')}_${now.format('HHmmss')}.zip`
+    const backupFileName = `CMU一键备份文件${
+      appVersion ? `_v${appVersion}` : ''
+    }_${now.format('YYYYMMDD')}_${now.format('HHmmss')}.zip`
     const backupFilePath = path.join(this.backupDir, backupFileName)
 
     // 等待 1s，避免请求太快，用户 1s 内点击多次
