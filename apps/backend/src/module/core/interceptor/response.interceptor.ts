@@ -6,10 +6,11 @@ import {
   NestInterceptor
 } from '@nestjs/common'
 import { Request } from 'express'
-import { Observable, map, tap } from 'rxjs'
+import { map, Observable, tap } from 'rxjs'
 
 import { HealthController } from '../../health/health.controller'
 import { Result } from '../../shared/model/result'
+import { getBaseLog } from '../../shared/utils/log'
 
 @Injectable()
 export class ResponseInterceptor<T extends object = Record<string, unknown>>
@@ -24,6 +25,7 @@ export class ResponseInterceptor<T extends object = Record<string, unknown>>
     }
 
     const req = ctx.switchToHttp().getRequest<Request>()
+    const now = Date.now()
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Result) {
@@ -36,9 +38,10 @@ export class ResponseInterceptor<T extends object = Record<string, unknown>>
       tap((data) => {
         this.logger.debug(
           JSON.stringify({
-            reqId: req.header('x-request-id'),
-            url: req.originalUrl
-            // res: data
+            message: '请求结束',
+            ...getBaseLog(req),
+            duration: `${Date.now() - now}ms`, // 请求耗时
+            resBody: data
           })
         )
       })

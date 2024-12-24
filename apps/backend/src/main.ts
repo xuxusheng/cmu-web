@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     // Log 模块，参考文档：https://github.com/gremo/nest-winston
     logger: WinstonModule.createLogger({
-      level: 'info',
+      level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
       format: winston.format.combine(
         winston.format.errors({ stack: true }),
         winston.format.timestamp(),
