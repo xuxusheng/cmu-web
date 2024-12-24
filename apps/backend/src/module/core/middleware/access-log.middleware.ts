@@ -1,6 +1,8 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common'
 import { NextFunction, Request, Response } from 'express'
 
+import { getBaseLog } from '../../shared/utils/log'
+
 /**
  * 访问日志中间件
  */
@@ -10,9 +12,8 @@ export class AccessLogMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     const data = {
-      reqId: req.header('x-request-id'),
-      url: req.originalUrl,
-      body: req.body
+      message: '请求开始',
+      ...getBaseLog(req)
     }
 
     this.logger.log(JSON.stringify(data))
