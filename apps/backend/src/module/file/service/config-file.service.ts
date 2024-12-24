@@ -67,7 +67,7 @@ export class ConfigFileService {
     const { filename, type } = dto
 
     // 软连接要指向的原始文件
-    const filePath = path.resolve(this.configDir, filename)
+    const filePath = path.join(this.configDir, filename)
 
     if (!fs.existsSync(filePath)) {
       throw new NotFoundException(`文件 ${filename} 不存在`)
@@ -89,7 +89,7 @@ export class ConfigFileService {
     //   fs.unlinkSync(configFilePath)
     // }
 
-    const configFilePath = path.resolve(this.configDir, `${type}`)
+    const configFilePath = path.join(this.configDir, `${type}`)
     // 如果已存在，就直接删掉
     try {
       fs.unlinkSync(configFilePath)

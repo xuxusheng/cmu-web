@@ -334,14 +334,14 @@ export class SystemConfigService {
       throw new InternalServerErrorException(`文件 ${mmsConfigFilePath} 不存在`)
     }
 
-    const cfgSqlite3FilePath = path.join(gMmsEtcHome, 'cfg.sqlite3')
+    const cfgSqlite3FilePath = path.resolve(gMmsEtcHome, 'cfg.sqlite3')
     if (!fs.existsSync(cfgSqlite3FilePath)) {
       throw new InternalServerErrorException(
         `文件 ${cfgSqlite3FilePath} 不存在`
       )
     }
 
-    const cfgI2Sqlite3FilePath = path.join(gMmsEtcHome, 'cfg_i2.sqlite3')
+    const cfgI2Sqlite3FilePath = path.resolve(gMmsEtcHome, 'cfg_i2.sqlite3')
     if (!fs.existsSync(cfgI2Sqlite3FilePath)) {
       throw new InternalServerErrorException(
         `文件 ${cfgI2Sqlite3FilePath} 不存在`
@@ -368,7 +368,10 @@ export class SystemConfigService {
     zip.file(icdFileName, fs.readFileSync(icdFilePath))
 
     // cfg.sqlite3 和 cfg_i2.sqlite3 两个文件如果都是软链接，备份时，需要备份原始文件
-    if (fs.lstatSync(cfgSqlite3FilePath).isSymbolicLink()) {
+    const cfgSqlite3IsSymbolicLink = fs
+      .lstatSync(cfgSqlite3FilePath)
+      .isSymbolicLink()
+    if (cfgSqlite3IsSymbolicLink) {
       let realPath = fs.realpathSync(cfgSqlite3FilePath)
       console.log(`cfg.sqlite3 软链接指向路径 ${realPath}`)
       // 如果 realPath 为相对路径，需要计算一下绝对路径
