@@ -5,14 +5,16 @@ import { Button, message, Modal, Space, Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { sum } from 'lodash-es'
 import prettyBytes from 'pretty-bytes'
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { usePreviousDistinct } from 'react-use'
 
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemApi } from '../../../../api/system.ts'
+import { ChangelogModal } from './ChangelogModal.tsx'
 
 export const SystemStatusCard: FC = () => {
   // ----------------------------- React-Query -----------------------------
+  const [changelogModalOpen, setChangelogModalOpen] = useState(false)
   const rebootMutation = useMutation({
     mutationFn: systemApi.reboot
   })
@@ -124,9 +126,10 @@ export const SystemStatusCard: FC = () => {
           系统状态
           {version && (
             <Tag
-              style={{ marginBottom: 3 }}
+              style={{ marginBottom: 3, cursor: 'pointer' }}
               color="processing"
               bordered={false}
+              onClick={() => setChangelogModalOpen(true)}
             >
               {version}
             </Tag>
@@ -134,6 +137,10 @@ export const SystemStatusCard: FC = () => {
         </Space>
       }
     >
+      <ChangelogModal
+        open={changelogModalOpen}
+        setOpen={setChangelogModalOpen}
+      />
       <StatisticCard.Group wrap={true}>
         <StatisticCard
           colSpan={cardColSpan}

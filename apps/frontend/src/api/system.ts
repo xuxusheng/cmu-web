@@ -14,6 +14,14 @@ import { request } from './request.tsx'
 class SystemApi {
   private readonly baseUrl = '/api'
 
+  getChangelog = () => {
+    return request.get<
+      Res<{
+        content: string
+      }>
+    >(`${this.baseUrl}/system/changelog`)
+  }
+
   getVersion = () => {
     return request.get<
       Res<{

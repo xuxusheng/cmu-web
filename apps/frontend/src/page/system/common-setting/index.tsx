@@ -13,7 +13,6 @@ import { SystemTimeCard } from './components/SystemTimeCard.tsx'
 
 const CommonSettingPage: FC = () => {
   const navigate = useNavigate()
-
   return (
     <PageContainer
       breadcrumb={{
