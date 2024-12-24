@@ -9,7 +9,11 @@ import {
   Put
 } from '@nestjs/common'
 import dayjs from 'dayjs'
+import { readFileSync } from 'fs'
+import fs from 'node:fs'
+import path from 'node:path'
 
+import { Public } from '../shared/decorator/public'
 import { Result } from '../shared/model/result'
 import { RestartProcessDto } from './dto/restart-process.dto'
 import { SetLicenseDto } from './dto/set-license.dto'
@@ -19,15 +23,36 @@ import { SystemService } from './system.service'
 
 @Controller('api/system')
 export class SystemController {
-  constructor(private systemSvc: SystemService) {}
+  constructor(private readonly systemSvc: SystemService) {}
 
   /**
    * 查询应用版本
    */
+  @Public()
   @Get('version')
   getVersion() {
     return {
-      version: process.env.APP_VERSION
+      version: process.env.APP_VERSION || ''
+    }
+  }
+
+  /**
+   * 更新日志
+   */
+  @Public()
+  @Get('changelog')
+  getChangelog() {
+    const filePath = path.join(process.cwd(), 'CHANGELOG.md')
+
+    // 文件不存在
+    if (!fs.existsSync(filePath)) {
+      return {
+        content: ''
+      }
+    }
+
+    return {
+      content: readFileSync(filePath, 'utf8')
     }
   }
 
@@ -36,8 +61,8 @@ export class SystemController {
    */
   @Put('time')
   @HttpCode(HttpStatus.OK)
-  setSystemTime(@Body() dto: SetSystemTimeDto) {
-    this.systemSvc.setSystemTime(dto)
+  async setSystemTime(@Body() dto: SetSystemTimeDto) {
+    await this.systemSvc.setSystemTime(dto)
   }
 
   /**
