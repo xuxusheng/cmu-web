@@ -370,6 +370,9 @@ export class SystemConfigService {
     // cfg.sqlite3 和 cfg_i2.sqlite3 两个文件如果都是软链接，备份时，需要备份原始文件
     if (fs.lstatSync(cfgSqlite3FilePath).isSymbolicLink()) {
       const realPath = fs.readlinkSync(cfgSqlite3FilePath)
+      this.logger.log(
+        `cfg.sqlite3 软链接指向路径 ${realPath}，文件名为 ${path.basename(realPath)}`
+      )
       zip.file(path.basename(realPath), fs.readFileSync(realPath))
     } else {
       zip.file('cfg.sqlite3', fs.readFileSync(cfgSqlite3FilePath))
@@ -377,12 +380,14 @@ export class SystemConfigService {
 
     if (fs.lstatSync(cfgI2Sqlite3FilePath).isSymbolicLink()) {
       const realPath = fs.readlinkSync(cfgI2Sqlite3FilePath)
+      this.logger.log(
+        `cfg_i2.sqlite3 软链接指向路径 ${realPath}，文件名为 ${path.basename(realPath)}`
+      )
       zip.file(path.basename(realPath), fs.readFileSync(realPath))
     } else {
       zip.file('cfg_i2.sqlite3', fs.readFileSync(cfgI2Sqlite3FilePath))
     }
 
-    const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' })
     const now = dayjs()
 
     const appVersion = process.env.APP_VERSION
@@ -403,6 +408,7 @@ export class SystemConfigService {
     }_${now.format('YYYYMMDD')}_${now.format('HHmmss')}.zip`
     const backupFilePath = path.join(this.backupDir, backupFileName)
 
+    const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' })
     // 等待 1s，避免请求太快，用户 1s 内点击多次
     await sleep(1000)
     fs.writeFileSync(backupFilePath, zipBuffer)
