@@ -25,6 +25,7 @@ export class ResponseInterceptor<T extends object = Record<string, unknown>>
     }
 
     const req = ctx.switchToHttp().getRequest<Request>()
+    const now = Date.now()
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Result) {
@@ -39,6 +40,7 @@ export class ResponseInterceptor<T extends object = Record<string, unknown>>
           JSON.stringify({
             message: '请求结束',
             ...getBaseLog(req),
+            duration: `${Date.now() - now}ms`, // 请求耗时
             resBody: data
           })
         )

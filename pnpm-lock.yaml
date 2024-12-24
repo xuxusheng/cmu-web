@@ -18,8 +18,8 @@ importers:
         specifier: ^9.1.7
         version: 9.1.7
       turbo:
-        specifier: ^2.3.3
-        version: 2.3.3
+        specifier: ^2.3.4-canary.5
+        version: 2.3.4-canary.5
 
   apps/backend:
     dependencies:
@@ -60,8 +60,8 @@ importers:
         specifier: ^1.7.9
         version: 1.7.9
       better-sqlite3:
-        specifier: ^9.4.5
-        version: 9.6.0
+        specifier: ^11.7.0
+        version: 11.7.0
       cache-manager:
         specifier: ^5.6.1
         version: 5.6.1
@@ -109,7 +109,7 @@ importers:
         version: 3.10.1
       knex:
         specifier: ^3.1.0
-        version: 3.1.0(better-sqlite3@9.6.0)
+        version: 3.1.0(better-sqlite3@11.7.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2671,9 +2671,6 @@ packages:
 
   better-sqlite3@11.7.0:
     resolution: {integrity: sha512-mXpa5jnIKKHeoGzBrUJrc65cXFKcILGZpU3FXR0pradUEm9MA7UZz02qfEejaMcm9iXrSOCenwwYMJ/tZ1y5Ig==}
-
-  better-sqlite3@9.6.0:
-    resolution: {integrity: sha512-yR5HATnqeYNVnkaUTf4bOP2dJSnyhP4puJN/QPRyx4YkBEEUxib422n2XzPqDEHjQQqazoYoADdAm5vE15+dAQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -5806,41 +5803,41 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  turbo-darwin-64@2.3.3:
-    resolution: {integrity: sha512-bxX82xe6du/3rPmm4aCC5RdEilIN99VUld4HkFQuw+mvFg6darNBuQxyWSHZTtc25XgYjQrjsV05888w1grpaA==}
+  turbo-darwin-64@2.3.4-canary.5:
+    resolution: {integrity: sha512-9Qss8/a1STSm4APFM1tejlgJyHKquJwQvtj9XTE4tNxqxMt3tjsii6uP/0Ofh7geIBL7WnHk4o6KNyvu93X8Ww==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.3.3:
-    resolution: {integrity: sha512-DYbQwa3NsAuWkCUYVzfOUBbSUBVQzH5HWUFy2Kgi3fGjIWVZOFk86ss+xsWu//rlEAfYwEmopigsPYSmW4X15A==}
+  turbo-darwin-arm64@2.3.4-canary.5:
+    resolution: {integrity: sha512-c12Hbf9QFEOvSmcnsRGSDvM36W875LsrwfQRcAIzxitLStUJ+m3e4PrkUOrqIPC7QBdjZ9QLpZzsRnYZe7wVcA==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.3.3:
-    resolution: {integrity: sha512-eHj9OIB0dFaP6BxB88jSuaCLsOQSYWBgmhy2ErCu6D2GG6xW3b6e2UWHl/1Ho9FsTg4uVgo4DB9wGsKa5erjUA==}
+  turbo-linux-64@2.3.4-canary.5:
+    resolution: {integrity: sha512-l5orUODLKBfKAmoJslu6mDXg0uvl4Qku0i+Fa/uZBC5FsmcGwGmuW5HLdKU1pNpyu9UNWYylQlrDRaipV92f3Q==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.3.3:
-    resolution: {integrity: sha512-NmDE/NjZoDj1UWBhMtOPmqFLEBKhzGS61KObfrDEbXvU3lekwHeoPvAMfcovzswzch+kN2DrtbNIlz+/rp8OCg==}
+  turbo-linux-arm64@2.3.4-canary.5:
+    resolution: {integrity: sha512-baj5FyY4mS9r7lXEy5iiN4RG+bITBuv+cHh7vN8QZnL6P76rXhrXB5Ve3bjbeWeH2p7R16pRQ6r6UQSNgQ98ww==}
     cpu: [arm64]
     os: [linux]
 
   turbo-stream@2.4.0:
     resolution: {integrity: sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==}
 
-  turbo-windows-64@2.3.3:
-    resolution: {integrity: sha512-O2+BS4QqjK3dOERscXqv7N2GXNcqHr9hXumkMxDj/oGx9oCatIwnnwx34UmzodloSnJpgSqjl8iRWiY65SmYoQ==}
+  turbo-windows-64@2.3.4-canary.5:
+    resolution: {integrity: sha512-E5NCTBCCf07yICRKb8NwiRoKnLikxX50kq70TJEVfPQEqK0D8a1haOhDb2ErKVFdMlqv6rET5B4HWjB+TwgMUg==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.3.3:
-    resolution: {integrity: sha512-dW4ZK1r6XLPNYLIKjC4o87HxYidtRRcBeo/hZ9Wng2XM/MqqYkAyzJXJGgRMsc0MMEN9z4+ZIfnSNBrA0b08ag==}
+  turbo-windows-arm64@2.3.4-canary.5:
+    resolution: {integrity: sha512-aRYUbuKdOHmiwlBM0kEc1hGmuK1jJ5EFlolJk4yDLUEtb/4fQmNUU3boBPWhQ+zAvTVLUnbAZS+6WNE6r3jX4g==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.3.3:
-    resolution: {integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==}
+  turbo@2.3.4-canary.5:
+    resolution: {integrity: sha512-+I/DbKnHlpXyxndCcTOFEUrxXOFs7sPzi1xF/z4nHre3814ZwQFpDBuOETEHZK9xWghRPNq7po4GDEC9+0WN7Q==}
     hasBin: true
 
   type-check@0.4.0:
@@ -8608,11 +8605,6 @@ snapshots:
       bindings: 1.5.0
       prebuild-install: 7.1.2
 
-  better-sqlite3@9.6.0:
-    dependencies:
-      bindings: 1.5.0
-      prebuild-install: 7.1.2
-
   binary-extensions@2.3.0: {}
 
   bindings@1.5.0:
@@ -10425,7 +10417,7 @@ snapshots:
 
   kleur@3.0.3: {}
 
-  knex@3.1.0(better-sqlite3@9.6.0):
+  knex@3.1.0(better-sqlite3@11.7.0):
     dependencies:
       colorette: 2.0.19
       commander: 10.0.1
@@ -10442,7 +10434,7 @@ snapshots:
       tarn: 3.0.2
       tildify: 2.0.0
     optionalDependencies:
-      better-sqlite3: 9.6.0
+      better-sqlite3: 11.7.0
     transitivePeerDependencies:
       - supports-color
 
@@ -12168,34 +12160,34 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  turbo-darwin-64@2.3.3:
+  turbo-darwin-64@2.3.4-canary.5:
     optional: true
 
-  turbo-darwin-arm64@2.3.3:
+  turbo-darwin-arm64@2.3.4-canary.5:
     optional: true
 
-  turbo-linux-64@2.3.3:
+  turbo-linux-64@2.3.4-canary.5:
     optional: true
 
-  turbo-linux-arm64@2.3.3:
+  turbo-linux-arm64@2.3.4-canary.5:
     optional: true
 
   turbo-stream@2.4.0: {}
 
-  turbo-windows-64@2.3.3:
+  turbo-windows-64@2.3.4-canary.5:
     optional: true
 
-  turbo-windows-arm64@2.3.3:
+  turbo-windows-arm64@2.3.4-canary.5:
     optional: true
 
-  turbo@2.3.3:
+  turbo@2.3.4-canary.5:
     optionalDependencies:
-      turbo-darwin-64: 2.3.3
-      turbo-darwin-arm64: 2.3.3
-      turbo-linux-64: 2.3.3
-      turbo-linux-arm64: 2.3.3
-      turbo-windows-64: 2.3.3
-      turbo-windows-arm64: 2.3.3
+      turbo-darwin-64: 2.3.4-canary.5
+      turbo-darwin-arm64: 2.3.4-canary.5
+      turbo-linux-64: 2.3.4-canary.5
+      turbo-linux-arm64: 2.3.4-canary.5
+      turbo-windows-64: 2.3.4-canary.5
+      turbo-windows-arm64: 2.3.4-canary.5
 
   type-check@0.4.0:
     dependencies:

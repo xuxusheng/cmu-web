@@ -9,6 +9,9 @@ import {
   Put
 } from '@nestjs/common'
 import dayjs from 'dayjs'
+import { readFileSync } from 'fs'
+import fs from 'node:fs'
+import path from 'node:path'
 
 import { Public } from '../shared/decorator/public'
 import { Result } from '../shared/model/result'
@@ -30,6 +33,26 @@ export class SystemController {
   getVersion() {
     return {
       version: process.env.APP_VERSION || ''
+    }
+  }
+
+  /**
+   * 更新日志
+   */
+  @Public()
+  @Get('changelog')
+  getChangelog() {
+    const filePath = path.join(process.cwd(), 'CHANGELOG.md')
+
+    // 文件不存在
+    if (!fs.existsSync(filePath)) {
+      return {
+        content: ''
+      }
+    }
+
+    return {
+      content: readFileSync(filePath, 'utf8')
     }
   }
 
