@@ -12,9 +12,10 @@ import ansiRegex from 'ansi-regex'
 import { Request, Response } from 'express'
 
 import { Result } from '../../shared/model/result'
+import { getBaseLog } from '../../shared/utils/log'
 import {
-  BaseException,
   BadRequestException as CustomBadRequestException,
+  BaseException,
   InternalServerErrorException as CustomInternalServerErrorException,
   NotFoundException as CustomNotFoundException
 } from './custom-exception'
@@ -82,10 +83,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     this.logger // 请求错误时的日志
       .error(
         JSON.stringify({
-          reqId: req.header('x-request-id'),
-          url: req.originalUrl,
-          req: req.body,
-          res: data
+          message: '请求错误',
+          ...getBaseLog(req),
+          resBody: data,
+          error: exception
         })
       )
 

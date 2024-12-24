@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { Express } from 'express'
 import { compact } from 'lodash'
@@ -11,10 +11,12 @@ import {
   NotFoundException
 } from '../../core/exception/custom-exception'
 import { ApplyConfigDto } from '../dto/apply-config.dto'
-import { ConfigFileType, ConfigFileTypeLabelMap } from '../enum/config'
+import { ConfigFileType } from '../enum/config'
 
 @Injectable()
 export class ConfigFileService {
+  private readonly logger = new Logger(ConfigFileService.name)
+
   private configDir = this.gMmsConf.gMmsEtcHome
 
   constructor(
@@ -63,7 +65,9 @@ export class ConfigFileService {
   // 应用配置文件
   apply = (dto: ApplyConfigDto) => {
     const { filename, type } = dto
-    const filePath = path.join(this.configDir, filename)
+
+    // 软连接要指向的原始文件
+    const filePath = path.resolve(this.configDir, filename)
 
     if (!fs.existsSync(filePath)) {
       throw new NotFoundException(`文件 ${filename} 不存在`)
@@ -85,10 +89,12 @@ export class ConfigFileService {
     //   fs.unlinkSync(configFilePath)
     // }
 
-    const configFilePath = path.join(this.configDir, `${type}`)
+    const configFilePath = path.resolve(this.configDir, `${type}`)
     // 如果已存在，就直接删掉
-    if (fs.existsSync(configFilePath)) {
+    try {
       fs.unlinkSync(configFilePath)
+    } catch (e) {
+      this.logger.error(e)
     }
 
     // 创建新的软链
