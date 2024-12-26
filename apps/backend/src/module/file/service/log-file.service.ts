@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { XMLParser } from 'fast-xml-parser'
+import { ensureDirSync } from 'fs-extra'
 import { compact } from 'lodash'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -67,6 +68,9 @@ export class LogFileService {
         'logcfg.xml 配置文件错误，未找到日志文件配置，请联系管理员'
       )
     }
+
+    // 如果 logDir 不存在的话，就新建一个，避免读取这个目录下的文件时直接报错
+    ensureDirSync(logDir)
 
     return {
       logDir,

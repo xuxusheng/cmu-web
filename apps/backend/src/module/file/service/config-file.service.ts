@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
-import { Express } from 'express'
+import { execSync } from 'child_process'
 import { compact } from 'lodash'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -66,39 +66,26 @@ export class ConfigFileService {
   apply = (dto: ApplyConfigDto) => {
     const { filename, type } = dto
 
-    // 软连接要指向的原始文件
-    const filePath = path.join(this.configDir, filename)
+    // 软连接要指向的目标文件
+    const targetFilePath = path.join(this.configDir, filename)
 
-    if (!fs.existsSync(filePath)) {
-      throw new NotFoundException(`文件 ${filename} 不存在`)
+    if (!fs.existsSync(targetFilePath)) {
+      throw new NotFoundException(`目标文件 ${filename} 不存在`)
     }
 
-    // 判断一下目录下是否存在非软连接的同名文件
-    // const configFilePath = path.join(this.configDir, `${type}`)
-    // if (
-    //   fs.existsSync(configFilePath) &&
-    //   !fs.lstatSync(configFilePath).isSymbolicLink()
-    // ) {
-    //   throw new InternalServerErrorException(
-    //     `应用为${ConfigFileTypeLabelMap[type]}失败，目录下已存在名为 ${type} 的非软链文件`
-    //   )
-    // }
-    //
-    // if (fs.existsSync(configFilePath)) {
-    //   // 先解除软链
-    //   fs.unlinkSync(configFilePath)
-    // }
-
     const configFilePath = path.join(this.configDir, `${type}`)
-    // 如果已存在，就直接删掉
+    // 删掉同名软链文件，避免创建时报错
     try {
       fs.unlinkSync(configFilePath)
     } catch (e) {
       this.logger.error(e)
     }
 
-    // 创建新的软链
-    fs.symlinkSync(filePath, configFilePath)
+    // 如果用 node 的 api 来创建的话，无法创建相对路径的软链接，这样当容器内外绝对路径不一样时，就容易有问题
+    // 所以使用 node 调用 linux 系统，先 cd 到目录中，然后 ln -s 命令的方式来执行
+    const cmd = `cd ${this.configDir} && ln -s ./${filename} ${type}`
+    this.logger.log(`执行命令：${cmd}`)
+    execSync(cmd)
   }
 
   // ----------------------------------- Read -----------------------------------
