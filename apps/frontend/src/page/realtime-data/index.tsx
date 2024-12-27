@@ -150,6 +150,7 @@ const RealtimeDataPage: FC = () => {
       <Flex wrap={true} gap={8}>
         {sensorDescPrefixOptions.map((prefix) => (
           <Tag.CheckableTag
+            key={prefix}
             checked={selectedDescPrefixes.includes(prefix)}
             onChange={(checked) => {
               if (checked) {

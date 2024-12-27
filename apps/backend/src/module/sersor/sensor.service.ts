@@ -142,29 +142,59 @@ export class SensorService {
 
   // 查询所有设备状态
   getAllSensorStatus = async () => {
-    const rows =
+    const status =
       await this.iedDataDB<UpdateStatusEntity>('update_status').select()
 
-    // 查询传感器列表
-    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').select()
-
-    // 根据 sensorId 转为 map
-    const sensorMap = sensors.reduce((map, sensor) => {
-      map.set(sensor.senId, sensor)
+    // 转 map
+    const statusMap = status.reduce((map, status) => {
+      map.set(status.senId, status)
       return map
-    }, new Map<number, SenCfgTblEntity>())
+    }, new Map<number, UpdateStatusEntity>())
 
-    return (
-      rows
-        // 存在 update_status 表中的数据，但是却不存在与传感器表，这种数据过滤掉
-        .filter(({ senId }) => sensorMap.has(senId))
-        .map(({ senId, statusId, ...rest }) => ({
-          id: statusId,
-          sensorId: senId,
-          sensorDescCn: sensorMap.get(senId)?.descCn,
-          ...rest
-        }))
-    )
+    // 查询传感器列表
+    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl')
+      .orderBy('sAddr') // 根据短地址升序排列
+      .select()
+
+    // // 根据 sensorId 转为 map
+    // const sensorMap = sensors.reduce((map, sensor) => {
+    //   map.set(sensor.senId, sensor)
+    //   return map
+    // }, new Map<number, SenCfgTblEntity>())
+    //
+    // return (
+    //   status
+    //     // 存在 update_status 表中的数据，但是却不存在与传感器表，这种数据过滤掉
+    //     .filter(({ senId }) => sensorMap.has(senId))
+    //     .map(({ senId, statusId, ...rest }) => ({
+    //       id: statusId,
+    //       sensorId: senId,
+    //       sensorDescCn: sensorMap.get(senId)?.descCn,
+    //       ...rest
+    //     }))
+    // )
+
+    // 不管是否存在状态数据，把所有传感器都展示出来
+    return sensors.map((sensor) => {
+      const status = statusMap.get(sensor.senId)
+
+      if (!status) {
+        return {
+          sensorId: sensor.senId,
+          sensorDescCn: sensor.descCn,
+          sAddr: sensor.sAddr
+        }
+      }
+
+      const { statusId, senId, ...rest } = status
+      return {
+        id: statusId,
+        sensorId: senId,
+        sAddr: sensor.sAddr,
+        sensorDescCn: sensor.descCn,
+        ...rest
+      }
+    })
   }
 
   // 查询所有传感器及最后上报的数据

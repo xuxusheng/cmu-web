@@ -1,5 +1,5 @@
-import { UpdateUsernameDto } from 'backend/dist/module/user/dto/update-username.dto'
-import { UserController } from 'backend/dist/module/user/user.controller.ts'
+import type { UpdateUsernameDto } from 'backend/dist/module/user/dto/update-username.dto'
+import type { UserController } from 'backend/dist/module/user/user.controller.ts'
 
 import { ResFromController } from '../interface/helper.ts'
 import { request } from './request.tsx'

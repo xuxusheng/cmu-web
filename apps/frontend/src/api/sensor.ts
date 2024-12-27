@@ -1,4 +1,4 @@
-import type { GetLatestDataDto } from 'backend/dist/src/module/sersor/dto/get-latest-data.dto.ts'
+import type { GetLatestDataDto } from 'backend/dist/module/sersor/dto/get-latest-data.dto.ts'
 
 import { SelectOption } from '../interface/common.ts'
 import { DWithPage } from '../interface/page.ts'
