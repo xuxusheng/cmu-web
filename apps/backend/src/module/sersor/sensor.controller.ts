@@ -20,6 +20,7 @@ import { Page } from '../shared/interface/page'
 import { Sensor, SensorAttr } from '../shared/interface/sensor'
 import { Result } from '../shared/model/result'
 import { CreateSensorDto } from './dto/create-sensor.dto'
+import { GetLatestDataDto } from './dto/get-latest-data.dto'
 import { GetReportDataDto } from './dto/get-report-data.dto'
 import { GetSensorAttrsDto } from './dto/get-sensor-attrs.dto'
 import { ListSensorDto } from './dto/list-sensor.dto'
@@ -58,8 +59,8 @@ export class SensorController {
 
   // 查询所有设备最新数据
   @Get('all-latest-data')
-  getLatestData() {
-    return this.sensorSvc.getAllLatestReportData()
+  getLatestData(@Query() dto: GetLatestDataDto) {
+    return this.sensorSvc.getAllLatestReportData(dto)
   }
 
   // 查询设备类型
@@ -76,6 +77,12 @@ export class SensorController {
   ): Promise<Result<SelectOption[]>> {
     const options = await this.sensorSvc.getSensorTypeOptions(lnClass)
     return Result.ok(options)
+  }
+
+  // 设备描述前缀可选项，供前端作为下拉查询条件
+  @Get('desc-prefix-options')
+  getDescPrefixOptions(): Promise<string[]> {
+    return this.sensorSvc.getDescPrefixOptions()
   }
 
   // 查询通讯类型

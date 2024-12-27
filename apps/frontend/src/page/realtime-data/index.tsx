@@ -10,10 +10,21 @@ import {
 } from '@ant-design/pro-components'
 import { useQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { Button, Empty, Space, Spin, Tooltip, Typography } from 'antd'
+import {
+  Button,
+  Col,
+  Empty,
+  Flex,
+  Row,
+  Space,
+  Spin,
+  Tag,
+  Tooltip,
+  Typography
+} from 'antd'
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
-import { FC, useEffect, useMemo, useRef } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
 import { QueryKey } from '../../api/query-key.ts'
@@ -25,13 +36,24 @@ const RealtimeDataPage: FC = () => {
   const navigate = useNavigate()
   // const [animateParent] = useAutoAnimate()
   const [searchParams, setSearchParams] = useSearchParams()
+  // 选中的描述前缀
+  const [selectedDescPrefixes, setSelectedDescPrefixes] = useState<string[]>([])
 
   const parentRef = useRef<HTMLDivElement>(null)
 
   // ----------------------------- React-Query -----------------------------
+  const sensorDescPrefixOptionsQuery = useQuery({
+    queryKey: [QueryKey.SensorDescPrefixOptions],
+    queryFn: sensorApi.getDescPrefixOptions,
+    gcTime: 1000 * 60 * 60 * 24 // 这个数据一般不会更改，直接缓存一天
+  })
+
   const allSensorLatestDataQuery = useQuery({
-    queryKey: [QueryKey.AllSensorLatestData],
-    queryFn: () => sensorApi.getAllLatestReportData(),
+    queryKey: [QueryKey.AllSensorLatestData, selectedDescPrefixes],
+    queryFn: () =>
+      sensorApi.getAllLatestReportData({
+        descPrefixes: selectedDescPrefixes
+      }),
     refetchInterval: 1000 * 10,
     gcTime: 1000 * 60 // 一分钟内乐观更新
   })
@@ -42,10 +64,16 @@ const RealtimeDataPage: FC = () => {
     gcTime: 1000 * 60 // 一分钟内乐观更新
   })
 
-  const loading =
-    allSensorLatestDataQuery.isLoading || allSensorStatusQuery.isLoading
+  // const loading =
+  //   allSensorLatestDataQuery.isLoading ||
+  //   allSensorStatusQuery.isLoading ||
+  //   sensorDescPrefixOptionsQuery.isLoading
 
   // ----------------------------- Memo -----------------------------
+  const sensorDescPrefixOptions = useMemo(
+    () => sensorDescPrefixOptionsQuery.data?.data.data || [],
+    [sensorDescPrefixOptionsQuery.data]
+  )
   const allSensorLatestData = useMemo(
     () => allSensorLatestDataQuery.data?.data.data || [],
     [allSensorLatestDataQuery.data]
@@ -117,7 +145,30 @@ const RealtimeDataPage: FC = () => {
 
   // ----------------------------- Render -----------------------------
 
-  const renderCardTitle = (sensor: (typeof allSensorLatestData)[0]) => (
+  const renderSensorPrefixOptions = () => {
+    return (
+      <Flex wrap={true} gap={8}>
+        {sensorDescPrefixOptions.map((prefix) => (
+          <Tag.CheckableTag
+            checked={selectedDescPrefixes.includes(prefix)}
+            onChange={(checked) => {
+              if (checked) {
+                setSelectedDescPrefixes([...selectedDescPrefixes, prefix])
+              } else {
+                setSelectedDescPrefixes(
+                  selectedDescPrefixes.filter((v) => v !== prefix)
+                )
+              }
+            }}
+          >
+            {prefix}
+          </Tag.CheckableTag>
+        ))}
+      </Flex>
+    )
+  }
+
+  const renderSensorCardTitle = (sensor: (typeof allSensorLatestData)[0]) => (
     <Space align="center" size="small" wrap={true}>
       <span>
         {isOneDayNoReport(sensor.latestReportTime) && (
@@ -136,7 +187,7 @@ const RealtimeDataPage: FC = () => {
     </Space>
   )
 
-  const renderCardExtra = (sensor: (typeof allSensorLatestData)[0]) => (
+  const renderSensorCardExtra = (sensor: (typeof allSensorLatestData)[0]) => (
     <Space wrap={true}>
       <Typography.Text style={{ display: 'inline' }} type="secondary">
         {sensor.latestReportTime}
@@ -153,16 +204,16 @@ const RealtimeDataPage: FC = () => {
     </Space>
   )
 
-  const renderCard = (sensor: (typeof allSensorLatestData)[0]) => {
+  const renderSensorCard = (sensor: (typeof allSensorLatestData)[0]) => {
     return (
       <ProCard
         className={clsx({
           [styles.warning]: isOneDayNoReport(sensor.latestReportTime)
         })}
-        extra={renderCardExtra(sensor)}
+        extra={renderSensorCardExtra(sensor)}
         id={`sensor-${sensor.id}`}
         style={{ marginBottom: 16, minWidth: 400 }}
-        title={renderCardTitle(sensor)}
+        title={renderSensorCardTitle(sensor)}
       >
         {sensor.latestReportData.length === 0 ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -186,13 +237,13 @@ const RealtimeDataPage: FC = () => {
     )
   }
 
-  if (loading || !allSensorLatestData.length) {
-    return (
-      <Spin spinning={loading}>
-        <Empty style={{ padding: '20vh 0' }} />
-      </Spin>
-    )
-  }
+  // if (loading || !allSensorLatestData.length) {
+  //   return (
+  //     <Spin spinning={loading}>
+  //       <Empty style={{ padding: '20vh 0' }} />
+  //     </Spin>
+  //   )
+  // }
 
   return (
     <PageContainer
@@ -213,45 +264,50 @@ const RealtimeDataPage: FC = () => {
       className={styles.main}
       title={false}
     >
-      <Spin spinning={allSensorLatestDataQuery.isFetching}>
-        <div
-          ref={parentRef}
-          style={{
-            height: 'calc(100vh - 120px)',
-            paddingRight: 16,
-            overflowY: 'auto',
-            contain: 'strict'
-          }}
-        >
-          <div
-            style={{
-              height: virtualizer.getTotalSize(),
-              width: '100%',
-              position: 'relative'
-            }}
-          >
+      <Row gutter={16}>
+        <Col flex="160px">{renderSensorPrefixOptions()}</Col>
+        <Col flex="auto">
+          <Spin spinning={allSensorLatestDataQuery.isFetching}>
             <div
+              ref={parentRef}
               style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                transform: `translateY(${items[0]?.start ?? 0}px)`
+                height: 'calc(100vh - 120px)',
+                paddingRight: 16,
+                overflowY: 'auto',
+                contain: 'strict'
               }}
             >
-              {items.map((virtualRow) => (
+              <div
+                style={{
+                  height: virtualizer.getTotalSize(),
+                  width: '100%',
+                  position: 'relative'
+                }}
+              >
                 <div
-                  data-index={virtualRow.index}
-                  key={virtualRow.key}
-                  ref={virtualizer.measureElement}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    transform: `translateY(${items[0]?.start ?? 0}px)`
+                  }}
                 >
-                  {renderCard(allSensorLatestData[virtualRow.index])}
+                  {items.map((virtualRow) => (
+                    <div
+                      data-index={virtualRow.index}
+                      key={virtualRow.key}
+                      ref={virtualizer.measureElement}
+                    >
+                      {renderSensorCard(allSensorLatestData[virtualRow.index])}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>{' '}
-      </Spin>
+          </Spin>
+        </Col>
+      </Row>
     </PageContainer>
   )
 }

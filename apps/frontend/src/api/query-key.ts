@@ -18,6 +18,7 @@ export enum QueryKey {
   LnClassOptions = 'LnClassOptions', // 设备类型可选项
   SensorTypeOptions = 'SensorTypeOptions', // 设备型号可选项
   CommTypeOptions = 'CommTypeOptions', // 通讯类型可选项
+  SensorDescPrefixOptions = 'SensorDescPrefixOptions',
 
   // Sensor Report Data
   AllSensorLatestData = 'AllSensorLatestData', // 所有传感器最新数据

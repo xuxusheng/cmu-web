@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import dayjs from 'dayjs'
 import { Knex } from 'knex'
-import { camelCase, groupBy, omit, omitBy, pick } from 'lodash'
+import { camelCase, groupBy, omit, omitBy, pick, sortedUniq } from 'lodash'
 import XLSX from 'xlsx'
 
 import {
@@ -22,6 +22,7 @@ import { KnexService } from '../shared/service/knex.service'
 import { isNilOrEmptyStr } from '../shared/utils/common'
 import { s2c } from '../shared/utils/s2c'
 import { CreateSensorDto } from './dto/create-sensor.dto'
+import { GetLatestDataDto } from './dto/get-latest-data.dto'
 import { GetReportDataDto } from './dto/get-report-data.dto'
 import { ListSensorDto } from './dto/list-sensor.dto'
 import { PageSensorDto } from './dto/page-sensor.dto'
@@ -167,9 +168,20 @@ export class SensorService {
   }
 
   // 查询所有传感器及最后上报的数据
-  getAllLatestReportData = async () => {
+  getAllLatestReportData = async (dto: GetLatestDataDto) => {
     // 先查询出所有的传感器
-    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').select()
+    const query = this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl')
+
+    if (dto.descPrefixes && dto.descPrefixes.length > 0) {
+      // 每个条件都前缀 like，多个 or
+      query.where((builder) => {
+        dto.descPrefixes.forEach((prefix) => {
+          builder.orWhere('descCn', 'like', `${prefix}%`)
+        })
+      })
+    }
+
+    const sensors = await query.select()
 
     // 根据 lnClass 字段，将 sensors 聚合分组
     const sensorGroup = groupBy(sensors, 'lnClass')
@@ -348,6 +360,7 @@ export class SensorService {
     )
 
     return rows.map((row) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { doId, doName, descCn, lnClass, ...rest } = row
       return {
         id: doId,
@@ -414,6 +427,20 @@ export class SensorService {
       label: row.commuTypeCn,
       value: row.commuType
     }))
+  }
+
+  // 查询设备描述前缀可选项
+  async getDescPrefixOptions() {
+    // 查询出所有传感器的 descCn 字段，然后提取前缀出来
+    const descList =
+      await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').distinct('descCn')
+
+    return sortedUniq(
+      descList.map(({ descCn }) => {
+        // 提取规则为先通过 | 分割，取出第一串字符，然后将最后一个 _ 符号及后面的字符移除
+        return descCn.split('|')[0].split('_').slice(0, -1).join('_')
+      })
+    )
   }
 
   // 查询指定设备类型和设备型号的属性字段
