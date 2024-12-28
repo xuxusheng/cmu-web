@@ -1,7 +1,7 @@
-import { ReloadOutlined, SettingOutlined } from '@ant-design/icons'
+import { SettingOutlined } from '@ant-design/icons'
 import { ProCard, StatisticCard } from '@ant-design/pro-components'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { Button, Empty, Modal, Space, Spin, Tag, Tooltip, message } from 'antd'
+import { useQuery } from '@tanstack/react-query'
+import { Empty, Space, Spin, Tag, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { FC, useMemo } from 'react'
 
@@ -10,9 +10,9 @@ import { systemApi } from '../../../../api/system.ts'
 
 export const ProcessStatusCard: FC = () => {
   // ----------------------------- React-Query -----------------------------
-  const restartProcessMutation = useMutation({
-    mutationFn: systemApi.restartProcess
-  })
+  // const restartProcessMutation = useMutation({
+  //   mutationFn: systemApi.restartProcess
+  // })
   const processStatusQuery = useQuery({
     queryKey: [QueryKey.ProcessStatus],
     queryFn: () => systemApi.getProcessStatus(),
@@ -24,22 +24,22 @@ export const ProcessStatusCard: FC = () => {
   }, [processStatusQuery.data])
 
   // ----------------------------- Method -----------------------------
-  const handleRestartProcess = (processName: string) => {
-    Modal.confirm({
-      title: `确定重启 ${processName} 进程吗？`,
-      onOk: async () => {
-        try {
-          await restartProcessMutation.mutateAsync(processName)
-        } catch (e) {
-          // 请求失败也关闭弹窗
-          return Promise.resolve(true)
-        }
-
-        message.success(`重启 ${processName} 进程成功`)
-        processStatusQuery.refetch()
-      }
-    })
-  }
+  // const handleRestartProcess = (processName: string) => {
+  //   Modal.confirm({
+  //     title: `确定重启 ${processName} 进程吗？`,
+  //     onOk: async () => {
+  //       try {
+  //         await restartProcessMutation.mutateAsync(processName)
+  //       } catch (e) {
+  //         // 请求失败也关闭弹窗
+  //         return Promise.resolve(true)
+  //       }
+  //
+  //       message.success(`重启 ${processName} 进程成功`)
+  //       processStatusQuery.refetch()
+  //     }
+  //   })
+  // }
 
   // ----------------------------- Render -----------------------------
   const renderContent = () => {
@@ -69,14 +69,14 @@ export const ProcessStatusCard: FC = () => {
                 <Space>
                   {item.procName}
 
-                  <Tooltip title="重启进程">
-                    <Button
-                      icon={<ReloadOutlined />}
-                      size="small"
-                      type="text"
-                      onClick={() => handleRestartProcess(item.procName)}
-                    ></Button>
-                  </Tooltip>
+                  {/*<Tooltip title="重启进程">*/}
+                  {/*  <Button*/}
+                  {/*    icon={<ReloadOutlined />}*/}
+                  {/*    size="small"*/}
+                  {/*    type="text"*/}
+                  {/*    onClick={() => handleRestartProcess(item.procName)}*/}
+                  {/*  ></Button>*/}
+                  {/*</Tooltip>*/}
                 </Space>
               ),
               valueRender: () =>
@@ -97,16 +97,6 @@ export const ProcessStatusCard: FC = () => {
                       未启动
                     </Tag>
                   </Tooltip>
-
-                  // <Tooltip title="重启进程">
-                  //   <Button
-                  //     size="large"
-                  //     type="text"
-                  //     onClick={() => handleRestartProcess(item.procName)}
-                  //   >
-                  //     <ReloadOutlined />
-                  //   </Button>
-                  // </Tooltip>
                 ),
               status: item.isRunning ? 'success' : 'error'
             }}

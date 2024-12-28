@@ -9,10 +9,10 @@ import {
   readFileSync,
   writeFileSync
 } from 'fs'
-import { parse } from 'ini'
 import ipAddr from 'ipaddr.js'
 import { address, route } from 'iproute'
 import Netplan from 'netplan-js'
+import path from 'node:path'
 import { cpus, freemem, networkInterfaces, totalmem, uptime } from 'os'
 import { join } from 'path'
 
@@ -166,28 +166,67 @@ export class SystemService {
   // }
 
   // 查询几个业务进程的状态
-  getProcessStatus = (): Promise<ProcessStatus[]> => {
-    // 先读取 monitor.ini 文件，查询三个进程的名称
-    const monitorIniPath = join(this.gMmsConf.gMmsHome, 'monitor.ini')
+  getProcessStatus = (): ProcessStatus[] => {
+    // // 先读取 monitor.ini 文件，查询三个进程的名称
+    // const monitorIniPath = join(this.gMmsConf.gMmsHome, 'monitor.ini')
+    //
+    // if (!existsSync(monitorIniPath)) {
+    //   throw new InternalServerErrorException(
+    //     `获取进程状态失败：文件 ${monitorIniPath} 不存在`
+    //   )
+    // }
+    //
+    // const monitorIni = parse(readFileSync(monitorIniPath, 'utf-8'))
+    //
+    // const iedProcName = monitorIni['ied_proc']
+    // const i2ProcName = monitorIni['i2_proc']
+    // const ntpProcName = monitorIni['ntp_proc']
+    //
+    // return Promise.all(
+    //   [iedProcName, i2ProcName, ntpProcName]
+    //     // 如果 monitor.ini 文件中的值为空，就不展示此进程相关信息
+    //     .filter((v) => !!v)
+    //     .map(this.getProcessStatusByName)
+    // )
+    // 进程信息改为从 /mnt/nand/log/proc_state 文件中读取，形式如下：
+    // commu_whjy_ied 27194 2024-12-26T11:35:31
+    // soap_proxy 27200 2024-12-26T11:35:31
+    // cmd_runner 3183 2024-12-25T20:40:35
 
-    if (!existsSync(monitorIniPath)) {
+    const filePath = path.join(this.gMmsConf.gNandHome, './log/proc_state')
+
+    // 判断文件是否存在
+    if (!existsSync(filePath)) {
       throw new InternalServerErrorException(
-        `获取进程状态失败：文件 ${monitorIniPath} 不存在`
+        `获取进程状态失败：文件 ${filePath} 不存在`
       )
     }
 
-    const monitorIni = parse(readFileSync(monitorIniPath, 'utf-8'))
+    // 将文件内容读取出来
+    const content = readFileSync(filePath, 'utf-8')
 
-    const iedProcName = monitorIni['ied_proc']
-    const i2ProcName = monitorIni['i2_proc']
-    const ntpProcName = monitorIni['ntp_proc']
+    // 如果内容为空，也报错
+    if (content.length === 0) {
+      throw new InternalServerErrorException(
+        `获取进程状态失败：文件 ${filePath} 内容为空`
+      )
+    }
 
-    return Promise.all(
-      [iedProcName, i2ProcName, ntpProcName]
-        // 如果 monitor.ini 文件中的值为空，就不展示此进程相关信息
-        .filter((v) => !!v)
-        .map(this.getProcessStatusByName)
-    )
+    const lines = content.split('\n')
+
+    return lines
+      .filter((line) => line.trim().length > 0)
+      .map((line) => {
+        const [procName, pid, startTime] = line.split(' ')
+        return {
+          procName,
+          pid,
+          isRunning: true,
+          runTime: Math.floor(
+            (Date.now() - new Date(startTime).getTime()) / 1000
+          )
+        }
+      })
   }
 
   // 通过名称查询进程状态
