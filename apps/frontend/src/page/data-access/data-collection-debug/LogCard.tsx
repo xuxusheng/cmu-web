@@ -3,19 +3,20 @@ import { ProCard } from '@ant-design/pro-components'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   Button,
+  Cascader,
   Dropdown,
   Flex,
   Input,
   MenuProps,
-  Select,
+  message,
   Space,
-  Tooltip,
-  message
+  Tooltip
 } from 'antd'
+import { CascaderProps } from 'antd/es/cascader'
 import { groupBy, throttle } from 'lodash-es'
 import { FC, useRef, useState } from 'react'
 import { useMount, useUnmount } from 'react-use'
-import { Socket, io } from 'socket.io-client'
+import { io, Socket } from 'socket.io-client'
 
 import { QueryKey } from '../../../api/query-key.ts'
 import { sensorDebugApi } from '../../../api/sensor-debug.ts'
@@ -47,15 +48,16 @@ export const LogCard: FC = () => {
   })
   const sensors = sensorsQuery.data?.data.data || []
   // 按照 lnClassNameCn 字段分个组
-  const sensorOptions = Object.entries(groupBy(sensors, 'lnClassNameCn')).map(
-    ([label, options]) => ({
-      label,
-      options: options.map((option) => ({
-        label: option.descCn,
-        value: option.id
-      }))
-    })
-  )
+  const sensorOptions: CascaderProps['options'] = Object.entries(
+    groupBy(sensors, 'lnClassNameCn')
+  ).map(([label, options]) => ({
+    label,
+    value: label,
+    children: options.map((option) => ({
+      label: option.descCn,
+      value: option.id
+    }))
+  }))
 
   const sensorDebugCommandsQuery = useQuery({
     queryKey: [QueryKey.SensorDebugCommands, selectedSensorId],
@@ -149,18 +151,21 @@ export const LogCard: FC = () => {
     <ProCard className={styles.main} title="采集程序日志">
       <Space direction="vertical" style={{ width: '100%' }}>
         <Flex gap="middle" wrap="wrap">
-          <Select
+          <Cascader
             allowClear={true}
             loading={sensorsQuery.isLoading}
-            optionFilterProp="label"
             options={sensorOptions}
             placeholder="请选择传感器"
             showSearch={true}
-            style={{ width: 180 }}
-            value={selectedSensorId}
-            onChange={(value) => setSelectedSensorId(value)}
+            style={{ width: '39em' }}
+            onChange={(value) => {
+              setSelectedSensorId(value[value.length - 1] as number)
+            }}
+            displayRender={(label) => {
+              return label[label.length - 1]
+            }}
+            expandTrigger="hover"
           />
-
           <Input
             placeholder="请输入参数"
             style={{ width: 180 }}

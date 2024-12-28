@@ -146,7 +146,7 @@ export const I2LogCard: FC = () => {
             options={i2SensorOptions}
             placeholder="请选择 I2 传感器"
             showSearch={true}
-            style={{ width: 180 }}
+            style={{ width: 280 }}
             value={selectedI2SensorId}
             onChange={(value) => setSelectedI2SensorId(value)}
           />
