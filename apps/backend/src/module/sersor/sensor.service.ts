@@ -153,7 +153,7 @@ export class SensorService {
 
     // 查询传感器列表
     const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl')
-      .orderBy('sAddr') // 根据短地址升序排列
+      .orderByRaw('cast(s_addr as integer)')
       .select()
 
     // // 根据 sensorId 转为 map
@@ -175,26 +175,31 @@ export class SensorService {
     // )
 
     // 不管是否存在状态数据，把所有传感器都展示出来
-    return sensors.map((sensor) => {
-      const status = statusMap.get(sensor.senId)
+    return (
+      sensors
+        // 将短地址转成数字类型，然后升序
+        // .sort((a, b) => Number(a.sAddr) - Number(b.sAddr))
+        .map((sensor) => {
+          const status = statusMap.get(sensor.senId)
 
-      if (!status) {
-        return {
-          sensorId: sensor.senId,
-          sensorDescCn: sensor.descCn,
-          sAddr: sensor.sAddr
-        }
-      }
+          if (!status) {
+            return {
+              sensorId: sensor.senId,
+              sensorDescCn: sensor.descCn,
+              sAddr: sensor.sAddr
+            }
+          }
 
-      const { statusId, senId, ...rest } = status
-      return {
-        id: statusId,
-        sensorId: senId,
-        sAddr: sensor.sAddr,
-        sensorDescCn: sensor.descCn,
-        ...rest
-      }
-    })
+          const { statusId, senId, ...rest } = status
+          return {
+            id: statusId,
+            sensorId: senId,
+            sAddr: sensor.sAddr,
+            sensorDescCn: sensor.descCn,
+            ...rest
+          }
+        })
+    )
   }
 
   // 查询所有传感器及最后上报的数据
@@ -580,7 +585,7 @@ export class SensorService {
       .where(where)
       .limit(ps)
       .offset((pn - 1) * ps)
-      .orderBy('senId', 'desc')
+      .orderByRaw('cast(s_addr as integer)')
       .select()
 
     return {

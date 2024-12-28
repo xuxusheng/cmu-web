@@ -175,7 +175,7 @@ const RealtimeStatusPage: FC = () => {
                   autoFocus: false
                 }}
                 name="onlyOnline"
-                label="仅显示在线设备"
+                label="仅显示已接入设备"
               />
             </LightFilter>
           )
