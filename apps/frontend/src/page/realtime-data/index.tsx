@@ -1,6 +1,7 @@
 import {
   FundProjectionScreenOutlined,
   HomeOutlined,
+  SearchOutlined,
   WarningOutlined
 } from '@ant-design/icons'
 import {
@@ -15,6 +16,7 @@ import {
   Col,
   Empty,
   Flex,
+  Input,
   Row,
   Space,
   Spin,
@@ -25,6 +27,7 @@ import {
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import Highlighter from 'react-highlight-words'
 import { useNavigate, useSearchParams } from 'react-router'
 
 import { QueryKey } from '../../api/query-key.ts'
@@ -40,6 +43,9 @@ const RealtimeDataPage: FC = () => {
   const [selectedDescPrefixes, setSelectedDescPrefixes] = useState<string[]>([])
 
   const parentRef = useRef<HTMLDivElement>(null)
+
+  // ------------------------------ State -----------------------------
+  const [keyword, setKeyword] = useState('')
 
   // ----------------------------- React-Query -----------------------------
   const sensorDescPrefixOptionsQuery = useQuery({
@@ -74,10 +80,19 @@ const RealtimeDataPage: FC = () => {
     () => sensorDescPrefixOptionsQuery.data?.data.data || [],
     [sensorDescPrefixOptionsQuery.data]
   )
-  const allSensorLatestData = useMemo(
-    () => allSensorLatestDataQuery.data?.data.data || [],
-    [allSensorLatestDataQuery.data]
-  )
+  const allSensorLatestData = useMemo(() => {
+    const data = allSensorLatestDataQuery.data?.data.data || []
+
+    if (!data.length) {
+      return []
+    }
+
+    if (keyword) {
+      return data.filter((v) => v.descCn.includes(keyword))
+    }
+
+    return data
+  }, [allSensorLatestDataQuery.data, keyword])
 
   const allSensorStatus = useMemo(
     () => allSensorStatusQuery.data?.data.data || [],
@@ -143,11 +158,32 @@ const RealtimeDataPage: FC = () => {
     return dayjs(datetime).isBefore(dayjs().subtract(24, 'hour'))
   }
 
+  // 设置关键词（防抖）
+  const setKeywordDebounce = useMemo(() => {
+    let timer: NodeJS.Timeout | null = null
+    return (keyword: string) => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {
+        setKeyword(keyword)
+      }, 300)
+    }
+  }, [])
+
   // ----------------------------- Render -----------------------------
 
   const renderSensorPrefixOptions = () => {
     return (
-      <Flex wrap={true} gap={8}>
+      <Flex
+        wrap={true}
+        gap={8}
+        style={{
+          maxHeight: 'calc(100vh - 142px)',
+          overflowY: 'auto',
+          marginRight: 16
+        }}
+      >
         {sensorDescPrefixOptions.map((prefix) => (
           <Tag.CheckableTag
             key={prefix}
@@ -178,7 +214,12 @@ const RealtimeDataPage: FC = () => {
           </Tooltip>
         )}
 
-        {sensor.descCn}
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[keyword]}
+          autoEscape
+          textToHighlight={sensor.descCn}
+        />
       </span>
       <div style={{ marginTop: -1 }}>
         <SensorStatusPoint
@@ -265,47 +306,69 @@ const RealtimeDataPage: FC = () => {
       className={styles.main}
       title={false}
     >
-      <Row gutter={16}>
+      <Row gutter={0}>
         <Col flex="160px">{renderSensorPrefixOptions()}</Col>
         <Col flex="auto">
-          <Spin spinning={allSensorLatestDataQuery.isFetching}>
-            <div
-              ref={parentRef}
-              style={{
-                height: 'calc(100vh - 120px)',
-                paddingRight: 16,
-                overflowY: 'auto',
-                contain: 'strict'
+          <div
+            style={{
+              marginBottom: 16,
+              paddingRight: 24
+            }}
+          >
+            <Input
+              allowClear
+              suffix={<SearchOutlined />}
+              size="large"
+              placeholder="请输入设备描述"
+              onChange={(e) => {
+                setKeywordDebounce(e.target.value)
               }}
-            >
+            />
+          </div>
+          <Spin spinning={allSensorLatestDataQuery.isFetching}>
+            {allSensorLatestData.length ? (
               <div
+                ref={parentRef}
                 style={{
-                  height: virtualizer.getTotalSize(),
-                  width: '100%',
-                  position: 'relative'
+                  height: 'calc(100vh - 200px)',
+                  paddingRight: 16,
+                  overflowY: 'auto',
+                  contain: 'strict'
                 }}
               >
                 <div
                   style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
+                    height: virtualizer.getTotalSize(),
                     width: '100%',
-                    transform: `translateY(${items[0]?.start ?? 0}px)`
+                    position: 'relative'
                   }}
                 >
-                  {items.map((virtualRow) => (
-                    <div
-                      data-index={virtualRow.index}
-                      key={virtualRow.key}
-                      ref={virtualizer.measureElement}
-                    >
-                      {renderSensorCard(allSensorLatestData[virtualRow.index])}
-                    </div>
-                  ))}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      transform: `translateY(${items[0]?.start ?? 0}px)`
+                    }}
+                  >
+                    {items.map((virtualRow) => (
+                      <div
+                        data-index={virtualRow.index}
+                        key={virtualRow.key}
+                        ref={virtualizer.measureElement}
+                      >
+                        {renderSensorCard(
+                          allSensorLatestData[virtualRow.index]
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <Empty style={{ marginTop: 120 }} />
+            )}
           </Spin>
         </Col>
       </Row>
