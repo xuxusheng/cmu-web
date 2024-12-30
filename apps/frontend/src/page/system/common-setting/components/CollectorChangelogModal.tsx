@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import MarkdownPreview from '@uiw/react-markdown-preview'
 import { Modal } from 'antd'
 import { FC, useMemo } from 'react'
 
@@ -11,27 +10,23 @@ interface Props {
   setOpen: (open: boolean) => void
 }
 
-export const ChangelogModal: FC<Props> = (props) => {
+export const CollectorChangelogModal: FC<Props> = (props) => {
   const { open, setOpen } = props
 
   // ---------------------------------- React-Query ----------------------------------
   const changelogQuery = useQuery({
-    queryKey: [QueryKey.SystemChangelog],
-    queryFn: () => systemApi.getChangelog(),
+    queryKey: [QueryKey.CollectorChangelog],
+    queryFn: () => systemApi.getCollectorChangelog(),
     gcTime: 1000 * 60 * 60 * 24 * 7 // 7 days
   })
 
   const changelog = useMemo(() => {
-    const content = changelogQuery.data?.data.data.content || ''
-    // return content
-    // 找到 content 字符串中，第一个 \n 的索引位置
-    const index = content.indexOf('\n')
-    return index > -1 ? content.slice(index + 3) : content
+    return changelogQuery.data?.data.data.content || ''
   }, [changelogQuery.data])
 
   return (
     <Modal
-      title="系统更新日志"
+      title="采集器更新日志"
       open={open}
       styles={{
         header: {
@@ -52,7 +47,12 @@ export const ChangelogModal: FC<Props> = (props) => {
           overflowY: 'auto'
         }}
       >
-        <MarkdownPreview source={changelog} />
+        {/*<MarkdownPreview source={changelog} />*/}
+        <div>
+          {changelog.split('\n').map((line, index) => {
+            return <div key={index}>{line}</div>
+          })}
+        </div>
       </div>
     </Modal>
   )

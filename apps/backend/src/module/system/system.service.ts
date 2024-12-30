@@ -313,4 +313,36 @@ export class SystemService {
 
   // 重启系统
   reboot = () => this.runnerService.runCmd('reboot')
+
+  // 获取 collector 版本号
+  getCollectorVersion() {
+    const changelog = this.getCollectorChangelog()
+
+    // changlog 文件格式如下：
+    // --------------------------------------------
+    // 版本:2024122823
+    // 修改内容:
+    // 1.monitor.sh将进程信息写入文件；
+    // 2.libcommu_guquan更正振动监测【综合分析结果】字段
+    // --------------------------------------------
+    // 版本:2024122319
+    // 修改内容:
+    // 1.docker导出成tar时指定版本，防止版本累加导出tar文件过大；
+    // 2.soap_proxy日志默认改为/mnt/nand/log/soap_proxy.log,现场已部署版本需手动修改etc/soap_proxy_zlog.conf
+
+    // 需要取第二行的数字
+    return changelog.split('\n')[1]?.split(':')[1]?.trim() || ''
+  }
+
+  // 获取 collector 更新日志
+  getCollectorChangelog() {
+    const filePath = path.join(this.gMmsConf.gMmsEtcHome, 'changelog.txt')
+
+    if (!existsSync(filePath)) {
+      return ''
+    }
+
+    // 读取文件内容
+    return readFileSync(filePath, 'utf-8')
+  }
 }

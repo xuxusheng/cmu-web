@@ -57,6 +57,28 @@ export class SystemController {
   }
 
   /**
+   * Collector 版本号
+   */
+  @Public()
+  @Get('collector/version')
+  getCollectorVersion() {
+    return {
+      version: this.systemSvc.getCollectorVersion()
+    }
+  }
+
+  /**
+   * Collector 更新日志
+   */
+  @Public()
+  @Get('collector/changelog')
+  getCollectorChangelog() {
+    return {
+      content: this.systemSvc.getCollectorChangelog()
+    }
+  }
+
+  /**
    * 设置系统时间
    */
   @Put('time')

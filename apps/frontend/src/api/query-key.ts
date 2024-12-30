@@ -32,6 +32,8 @@ export enum QueryKey {
   // System
   SystemChangelog = 'SystemChangelog',
   SystemVersion = 'SystemVersion', // 应用版本
+  CollectorVersion = 'CollectorVersion', // 采集器版本
+  CollectorChangelog = 'CollectorChangelog',
   SystemTime = 'SystemTime', // 系统时间
   SystemUptime = 'SystemUptime', // 系统运行时间
   SystemCpu = 'SystemCpu', // CPU 信息
