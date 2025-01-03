@@ -1,6 +1,20 @@
 # CMU-WEB - 更新日志 
 
 
+### [0.0.7](https://github.com/xuxusheng/cmu-web/compare/v0.0.6...v0.0.7) (2025-01-03)
+
+
+### ✨ Features | 新功能
+
+* 传感器输入框宽度调整 ([766d478](https://github.com/xuxusheng/cmu-web/commit/766d4789b6d10928f4bb793c63afe16c716e6c65))
+* 加入 Collector 版本信息展示功能 ([9f9fe42](https://github.com/xuxusheng/cmu-web/commit/9f9fe42b36f2b2ba840978def56e8a51c0d1feb1))
+* 实时数据页面加入设备描述查询功能 ([75256a0](https://github.com/xuxusheng/cmu-web/commit/75256a0023529dec2b4bde27c0cbb46be172c61d))
+* 实时数据页面加入通过描述信息前缀分组来进行筛选功能 ([1977588](https://github.com/xuxusheng/cmu-web/commit/19775880cc2266d46bc75cd3e08a34add135182c))
+* 总览页面展示无状态设备，同时加入相应筛选条件 ([f6fdce3](https://github.com/xuxusheng/cmu-web/commit/f6fdce396cf9ef106843440964d68aecba1d4fa0))
+* 指定配置文件时，改用 linux 命令创建相对路径软链接 ([7e9e01c](https://github.com/xuxusheng/cmu-web/commit/7e9e01cc9b42a4df50eb4692b951b28958ac8a68))
+* 文案调整 && 列表按照短地址升序排列 ([f5f048c](https://github.com/xuxusheng/cmu-web/commit/f5f048c06997f1a8f29c3836a55c441ce6eb1371))
+* 进程信息改为从 /mnt/nand/log/proc_state 文件中读取 ([d6edf75](https://github.com/xuxusheng/cmu-web/commit/d6edf75725b2e107df9591c7170b4ae5d2c82fcc))
+
 ### [0.0.6](https://github.com/xuxusheng/cmu-web/compare/v0.0.5...v0.0.6) (2024-12-24)
 
 
