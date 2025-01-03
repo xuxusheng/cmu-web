@@ -1,11 +1,13 @@
 import {
   ActionType,
+  LightFilter,
   PageContainer,
   ProColumns,
+  ProFormSwitch,
   ProTable
 } from '@ant-design/pro-components'
 import { Badge, Typography } from 'antd'
-import { FC, useCallback, useRef } from 'react'
+import { FC, useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useInterval } from 'react-use'
 
@@ -18,6 +20,8 @@ const RealtimeStatusPage: FC = () => {
 
   // ------------------------------------ State ------------------------------------
   const actionRef = useRef<ActionType>()
+  const [onlyOnline, setOnlyOnline] = useState(true)
+  const [keyword, setKeyword] = useState('')
 
   // ------------------------------------ React-Query ------------------------------------
 
@@ -65,6 +69,11 @@ const RealtimeStatusPage: FC = () => {
           {entity.sensorDescCn}
         </Typography.Link>
       )
+    },
+    {
+      title: '短地址',
+      dataIndex: 'sAddr',
+      key: 'sAddr'
     },
     {
       title: '通信状态',
@@ -117,16 +126,61 @@ const RealtimeStatusPage: FC = () => {
         options={{
           fullScreen: true
         }}
-        pagination={false}
-        request={async () => {
+        request={async (params, sort, filter) => {
+          console.log('表格查询参数：', params, sort, filter)
           const res = await sensorApi.getAllSensorStatus()
-          const data = res.data.data || []
+          let data = res.data.data || []
+
+          if (onlyOnline) {
+            data = data.filter((item) => !!item.id)
+          }
+
+          if (keyword) {
+            data = data.filter((item) => item.sensorDescCn.includes(keyword))
+          }
+
           return {
             data,
             success: true
           }
         }}
-        rowKey={(record) => record.id}
+        pagination={{
+          showQuickJumper: true,
+          pageSizeOptions: [10, 20, 50, 100, 200],
+          defaultPageSize: 100
+        }}
+        toolbar={{
+          search: {
+            placeholder: '请输入设备描述/短地址',
+            onSearch: (value) => {
+              setKeyword(value)
+              actionRef.current?.reload()
+            }
+          },
+          filter: (
+            <LightFilter<{
+              onlyOnline: boolean
+            }>
+              initialValues={{
+                onlyOnline: true
+              }}
+              onFinish={async (values) => {
+                console.log('轻量查询参数：', values)
+                setOnlyOnline(values.onlyOnline)
+                actionRef.current?.reload()
+              }}
+            >
+              <ProFormSwitch
+                fieldProps={{
+                  autoFocus: false
+                }}
+                name="onlyOnline"
+                label="仅显示已接入设备"
+              />
+            </LightFilter>
+          )
+        }}
+        rowKey={(record) => record.sensorId}
         scroll={{
           x: 'max-content'
         }}

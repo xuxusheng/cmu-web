@@ -10,7 +10,7 @@ import {
   QueryFilter
 } from '@ant-design/pro-components'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, Space, message } from 'antd'
+import { Button, message, Space } from 'antd'
 import dayjs from 'dayjs'
 import { camelCase, groupBy, isEqual, isNil, last, omitBy } from 'lodash-es'
 import { FC, useMemo, useRef, useState } from 'react'
@@ -225,6 +225,23 @@ const HistoryDataPage: FC = () => {
           <QueryFilter<FormState>
             initialValues={{ ...query }}
             onFinish={handleSearch}
+            defaultCollapsed={false}
+            submitterColSpanProps={{
+              span: 24,
+              xs: 24,
+              md: 24,
+              lg: 24,
+              xl: 24,
+              xxl: 4
+            }}
+            span={{
+              xs: 24,
+              sm: 24,
+              md: 24,
+              lg: 24,
+              xl: 12,
+              xxl: 10
+            }}
           >
             <ProFormCascader
               fieldProps={{

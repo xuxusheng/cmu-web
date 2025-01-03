@@ -18,6 +18,7 @@ export enum QueryKey {
   LnClassOptions = 'LnClassOptions', // 设备类型可选项
   SensorTypeOptions = 'SensorTypeOptions', // 设备型号可选项
   CommTypeOptions = 'CommTypeOptions', // 通讯类型可选项
+  SensorDescPrefixOptions = 'SensorDescPrefixOptions',
 
   // Sensor Report Data
   AllSensorLatestData = 'AllSensorLatestData', // 所有传感器最新数据
@@ -31,6 +32,8 @@ export enum QueryKey {
   // System
   SystemChangelog = 'SystemChangelog',
   SystemVersion = 'SystemVersion', // 应用版本
+  CollectorVersion = 'CollectorVersion', // 采集器版本
+  CollectorChangelog = 'CollectorChangelog',
   SystemTime = 'SystemTime', // 系统时间
   SystemUptime = 'SystemUptime', // 系统运行时间
   SystemCpu = 'SystemCpu', // CPU 信息

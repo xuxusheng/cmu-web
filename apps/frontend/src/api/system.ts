@@ -30,6 +30,20 @@ class SystemApi {
     >(`${this.baseUrl}/system/version`)
   }
 
+  getCollectorVersion = () =>
+    request.get<
+      Res<{
+        version: string
+      }>
+    >(`${this.baseUrl}/system/collector/version`)
+
+  getCollectorChangelog = () =>
+    request.get<
+      Res<{
+        content: string
+      }>
+    >(`${this.baseUrl}/system/collector/changelog`)
+
   getHostStatus = () => {
     return request.get<Res<HostStatus>>(`/api/system/host-status`)
   }

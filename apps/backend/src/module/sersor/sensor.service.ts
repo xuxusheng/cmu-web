@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import dayjs from 'dayjs'
 import { Knex } from 'knex'
-import { camelCase, groupBy, omit, omitBy, pick } from 'lodash'
+import { camelCase, groupBy, omit, omitBy, pick, sortedUniq } from 'lodash'
 import XLSX from 'xlsx'
 
 import {
@@ -22,6 +22,7 @@ import { KnexService } from '../shared/service/knex.service'
 import { isNilOrEmptyStr } from '../shared/utils/common'
 import { s2c } from '../shared/utils/s2c'
 import { CreateSensorDto } from './dto/create-sensor.dto'
+import { GetLatestDataDto } from './dto/get-latest-data.dto'
 import { GetReportDataDto } from './dto/get-report-data.dto'
 import { ListSensorDto } from './dto/list-sensor.dto'
 import { PageSensorDto } from './dto/page-sensor.dto'
@@ -141,35 +142,81 @@ export class SensorService {
 
   // 查询所有设备状态
   getAllSensorStatus = async () => {
-    const rows =
+    const status =
       await this.iedDataDB<UpdateStatusEntity>('update_status').select()
 
-    // 查询传感器列表
-    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').select()
-
-    // 根据 sensorId 转为 map
-    const sensorMap = sensors.reduce((map, sensor) => {
-      map.set(sensor.senId, sensor)
+    // 转 map
+    const statusMap = status.reduce((map, status) => {
+      map.set(status.senId, status)
       return map
-    }, new Map<number, SenCfgTblEntity>())
+    }, new Map<number, UpdateStatusEntity>())
 
+    // 查询传感器列表
+    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl')
+      .orderByRaw('cast(s_addr as integer)')
+      .select()
+
+    // // 根据 sensorId 转为 map
+    // const sensorMap = sensors.reduce((map, sensor) => {
+    //   map.set(sensor.senId, sensor)
+    //   return map
+    // }, new Map<number, SenCfgTblEntity>())
+    //
+    // return (
+    //   status
+    //     // 存在 update_status 表中的数据，但是却不存在与传感器表，这种数据过滤掉
+    //     .filter(({ senId }) => sensorMap.has(senId))
+    //     .map(({ senId, statusId, ...rest }) => ({
+    //       id: statusId,
+    //       sensorId: senId,
+    //       sensorDescCn: sensorMap.get(senId)?.descCn,
+    //       ...rest
+    //     }))
+    // )
+
+    // 不管是否存在状态数据，把所有传感器都展示出来
     return (
-      rows
-        // 存在 update_status 表中的数据，但是却不存在与传感器表，这种数据过滤掉
-        .filter(({ senId }) => sensorMap.has(senId))
-        .map(({ senId, statusId, ...rest }) => ({
-          id: statusId,
-          sensorId: senId,
-          sensorDescCn: sensorMap.get(senId)?.descCn,
-          ...rest
-        }))
+      sensors
+        // 将短地址转成数字类型，然后升序
+        // .sort((a, b) => Number(a.sAddr) - Number(b.sAddr))
+        .map((sensor) => {
+          const status = statusMap.get(sensor.senId)
+
+          if (!status) {
+            return {
+              sensorId: sensor.senId,
+              sensorDescCn: sensor.descCn,
+              sAddr: sensor.sAddr
+            }
+          }
+
+          const { statusId, senId, ...rest } = status
+          return {
+            id: statusId,
+            sensorId: senId,
+            sAddr: sensor.sAddr,
+            sensorDescCn: sensor.descCn,
+            ...rest
+          }
+        })
     )
   }
 
   // 查询所有传感器及最后上报的数据
-  getAllLatestReportData = async () => {
+  getAllLatestReportData = async (dto: GetLatestDataDto) => {
     // 先查询出所有的传感器
-    const sensors = await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').select()
+    const query = this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl')
+
+    if (dto.descPrefixes && dto.descPrefixes.length > 0) {
+      // 每个条件都前缀 like，多个 or
+      query.where((builder) => {
+        dto.descPrefixes.forEach((prefix) => {
+          builder.orWhere('descCn', 'like', `${prefix}%`)
+        })
+      })
+    }
+
+    const sensors = await query.select()
 
     // 根据 lnClass 字段，将 sensors 聚合分组
     const sensorGroup = groupBy(sensors, 'lnClass')
@@ -348,6 +395,7 @@ export class SensorService {
     )
 
     return rows.map((row) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { doId, doName, descCn, lnClass, ...rest } = row
       return {
         id: doId,
@@ -414,6 +462,20 @@ export class SensorService {
       label: row.commuTypeCn,
       value: row.commuType
     }))
+  }
+
+  // 查询设备描述前缀可选项
+  async getDescPrefixOptions() {
+    // 查询出所有传感器的 descCn 字段，然后提取前缀出来
+    const descList =
+      await this.cfgDB<SenCfgTblEntity>('sen_cfg_tbl').distinct('descCn')
+
+    return sortedUniq(
+      descList.map(({ descCn }) => {
+        // 提取规则为先通过 | 分割，取出第一串字符，然后将最后一个 _ 符号及后面的字符移除
+        return descCn.split('|')[0].split('_').slice(0, -1).join('_')
+      })
+    )
   }
 
   // 查询指定设备类型和设备型号的属性字段
@@ -523,7 +585,7 @@ export class SensorService {
       .where(where)
       .limit(ps)
       .offset((pn - 1) * ps)
-      .orderBy('senId', 'desc')
+      .orderByRaw('cast(s_addr as integer)')
       .select()
 
     return {

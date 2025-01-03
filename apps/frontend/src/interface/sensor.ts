@@ -17,6 +17,7 @@ export interface SensorStatus {
   id: number // 自增 ID
   sensorId: number // 传感器 ID
   sensorDescCn: string // 设备描述
+  sAddr: string // 设备短地址
   dataTime: Date // YYYY-MM-DD HH:mm:ss
   movDevConf: number // 通信异常 0:正常 1:预警 2:告警 -1:未知
   supDevRun: number // 运行异常

@@ -11,10 +11,13 @@ import { usePreviousDistinct } from 'react-use'
 import { QueryKey } from '../../../../api/query-key.ts'
 import { systemApi } from '../../../../api/system.ts'
 import { ChangelogModal } from './ChangelogModal.tsx'
+import { CollectorChangelogModal } from './CollectorChangelogModal.tsx'
 
 export const SystemStatusCard: FC = () => {
   // ----------------------------- React-Query -----------------------------
   const [changelogModalOpen, setChangelogModalOpen] = useState(false)
+  const [collectorChangelogModalOpen, setCollectorChangelogModalOpen] =
+    useState(false)
   const rebootMutation = useMutation({
     mutationFn: systemApi.reboot
   })
@@ -39,6 +42,10 @@ export const SystemStatusCard: FC = () => {
     queryKey: [QueryKey.SystemVersion],
     queryFn: () => systemApi.getVersion()
   })
+  const collectorVersionQuery = useQuery({
+    queryKey: [QueryKey.CollectorVersion],
+    queryFn: () => systemApi.getCollectorVersion()
+  })
 
   // ----------------------------- UseMemo -----------------------------
   const uptime = useMemo(
@@ -51,6 +58,10 @@ export const SystemStatusCard: FC = () => {
   const version = useMemo(
     () => versionQuery.data?.data.data.version,
     [versionQuery]
+  )
+  const collectorVersion = useMemo(
+    () => collectorVersionQuery.data?.data.data.version,
+    [collectorVersionQuery]
   )
 
   // cpu 占用率
@@ -124,22 +135,38 @@ export const SystemStatusCard: FC = () => {
         <Space>
           <DesktopOutlined />
           系统状态
-          {version && (
-            <Tag
-              style={{ marginBottom: 3, cursor: 'pointer' }}
-              color="processing"
-              bordered={false}
-              onClick={() => setChangelogModalOpen(true)}
-            >
-              {version}
-            </Tag>
-          )}
+          <div>
+            {version && (
+              <Tag
+                style={{ marginBottom: 3, cursor: 'pointer' }}
+                color="processing"
+                bordered={false}
+                onClick={() => setChangelogModalOpen(true)}
+              >
+                系统版本: {version}
+              </Tag>
+            )}
+            {collectorVersion && (
+              <Tag
+                style={{ marginBottom: 3, cursor: 'pointer' }}
+                color="processing"
+                bordered={false}
+                onClick={() => setCollectorChangelogModalOpen(true)}
+              >
+                采集器版本: {collectorVersion}
+              </Tag>
+            )}
+          </div>
         </Space>
       }
     >
       <ChangelogModal
         open={changelogModalOpen}
         setOpen={setChangelogModalOpen}
+      />
+      <CollectorChangelogModal
+        open={collectorChangelogModalOpen}
+        setOpen={setCollectorChangelogModalOpen}
       />
       <StatisticCard.Group wrap={true}>
         <StatisticCard

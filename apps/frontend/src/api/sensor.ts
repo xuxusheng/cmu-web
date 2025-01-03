@@ -1,3 +1,5 @@
+import type { GetLatestDataDto } from 'backend/dist/module/sersor/dto/get-latest-data.dto.ts'
+
 import { SelectOption } from '../interface/common.ts'
 import { DWithPage } from '../interface/page.ts'
 import { Res } from '../interface/res.ts'
@@ -35,7 +37,7 @@ class SensorApi {
     request.get<Res<SensorStatus[]>>(`${this.baseUrl}/all-status`)
 
   // 获取设备最新上报数据
-  getAllLatestReportData = () =>
+  getAllLatestReportData = (dto: GetLatestDataDto) =>
     request.get<
       Res<
         Array<
@@ -49,7 +51,9 @@ class SensorApi {
           }
         >
       >
-    >(`${this.baseUrl}/all-latest-data`)
+    >(`${this.baseUrl}/all-latest-data`, {
+      params: dto
+    })
 
   getSenBasicStatus = () =>
     request<Res<{ list: SensorBasicStatus[] }>>(
@@ -94,6 +98,10 @@ class SensorApi {
     request.get<Res<SelectOption<number>[]>>(
       `${this.baseUrl}/comm-type-options`
     )
+
+  // 查询描述前缀可选项
+  getDescPrefixOptions = () =>
+    request.get<Res<string[]>>(`${this.baseUrl}/desc-prefix-options`)
 
   // 查询所有设备类型和设备型号对应的属性字段
   getAllSensorAttrs = () =>
